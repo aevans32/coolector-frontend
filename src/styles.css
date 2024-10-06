@@ -10,3 +10,7 @@ h3 {
 h2 {
     font-family: 'Courier New', Courier, monospace;
 }
+
+h1 {
+    background-color: blue;
+}
