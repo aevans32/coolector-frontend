@@ -1,1 +1,28 @@
-<p>data-table works!</p>
+<div class="table-responsive small">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Column 1</th>
+          <th scope="col">Column 2</th>
+          <th scope="col">Column 3</th>
+          <th scope="col">Column 4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Use *ngFor to loop through the rows in tableData -->
+        <tr *ngFor="let row of tableData()">
+          <td>{{ row.id }}</td>
+          <td>{{ row.column1 }}</td>
+          <td>{{ row.column2 }}</td>
+          <td>{{ row.column3 }}</td>
+          <td>{{ row.column4 }}</td>
+        </tr>
+        <!-- Display this row if there is no data -->
+        <tr *ngIf="tableData().length === 0">
+          <td colspan="5">No info available</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
