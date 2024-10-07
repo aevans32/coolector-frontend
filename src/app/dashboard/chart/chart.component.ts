@@ -37,7 +37,7 @@ export class ChartComponent {
         24092,
         12034
       ],
-      label: 'Weekly Data',
+      label: 'Value',
       tension: 0,
       backgroundColor: 'transparent',
       borderColor: '#007bff',
