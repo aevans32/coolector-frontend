@@ -1,3 +1,4 @@
+<ng-container *ngIf="isAuthenticated()">
 <app-header/>
 <div class="container-fluid">
   <div class="row">
@@ -12,6 +13,9 @@
     
   </div>
 </div>
+</ng-container>
+
+<router-outlet></router-outlet>
 
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 
