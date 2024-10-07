@@ -1,17 +1,1 @@
 /* You can add global styles to this file, and also import other style files */
-h3 {
-    font-size: 18px;
-    /*
-    a new comment to see if it gets tracked
-    moooore changes
-    */
-}
-
-h2 {
-    font-family: 'Courier New', Courier, monospace;
-}
-
-h1 {
-    background-color: blue;
-    font-size: small;
-}
