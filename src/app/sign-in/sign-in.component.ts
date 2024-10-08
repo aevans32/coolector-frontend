@@ -2,14 +2,19 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 
+import { ReactiveFormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css'
 })
 export class SignInComponent {
+
+
+  // ffsdfasdfasfss
 
   constructor (
     private authService: AuthService,
