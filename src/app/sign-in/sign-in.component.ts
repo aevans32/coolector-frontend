@@ -166,7 +166,7 @@ export class SignInComponent {
   newSignUp(event: Event): void {
     event.preventDefault();
 
-    this.router.navigate(['signUp']);
+    this.router.navigate(['sign-up']);
   }
 
 }

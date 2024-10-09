@@ -3,6 +3,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
 import { inject } from '@angular/core';
 import { AuthService } from './auth.service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { SignUpComponent } from './sign-in/sign-up/sign-up.component';
 
 // using this method to see it user is authenticated
 const canActivateDashboard = () => inject(AuthService).isLoggedIn();
@@ -14,6 +15,9 @@ export const routes: Routes = [
         path: 'dashboard', 
         component: DashboardComponent,
         canActivate: [canActivateDashboard] //protect the route
-    }, // Route to the dashboard or other components
-    // Add other routes as needed
+    },
+    {
+        path: 'sign-up',
+        component: SignUpComponent
+    }
   ];
