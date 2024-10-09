@@ -1,4 +1,4 @@
-<div class="text-center">
+<div class="signinPage text-center h-100">
   <div class="top-space"></div>
     <form [formGroup]="reactiveForm" class="form-signin " (ngSubmit)="onSubmit()">
       <img class="form-image mb-4" src="assets/logocoolectorv1.png" alt="Coolector Logo" width="300" height="172">
@@ -22,13 +22,24 @@
         <p class="control-error">{{ passwordErrors }}</p>}
       </div>
 
-      <div class="checkbox mb-3">
+      <div class="checkbox mb-3"> 
         <label>
           <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
+      <div class="signIn-error-message" style="width: 300px; height: 50px">
+        @if (emailIsInvalid || passwordIsInvalid && signInErrors) {
+          <p class="error-singIn-msg">{{ signInErrors }}</p>
+        }
+      </div>
+
+      <div class="no-account-yet">
+        <a href="" (click)="newSignUp($event)">I don't have an account yet.</a>
+      </div>
+      
+
+      <p class="mt-5  text-muted">© 2017-2018</p>
     </form>
 
     <div class="bottom-space"></div>

@@ -118,6 +118,18 @@ export class SignInComponent {
       }
       return null;
     }
+
+    get signInErrors() {
+
+      const errorEmail = this.reactiveForm.controls.reactiveEmail.errors;
+      const errorPw = this.reactiveForm.controls.reactivePassword.errors;
+
+      if (errorEmail || errorPw) {
+        return 'Please fill email an password fields appropriately.';  
+      }
+
+      return null;
+    }
   
   
   
@@ -149,6 +161,12 @@ export class SignInComponent {
     // Here you could validate form fields and authenticate with a backend
     this.authService.login(); // log the user in
     this.router.navigate(['dashboard']); //navigate to the dashboard
+  }
+
+  newSignUp(event: Event): void {
+    event.preventDefault();
+
+    this.router.navigate(['signUp']);
   }
 
 }

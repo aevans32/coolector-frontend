@@ -8,7 +8,7 @@ body {
 }
 
 .top-space, .bottom-space {
-  height: 89px;
+  height: 45px;
 }
 
 .form-image {
@@ -34,6 +34,14 @@ form {
   background: linear-gradient(180deg, #ffffff, #f0ecec);
   border-radius: 8px;
   box-shadow: 0 0 16px 1px rgba(0, 0, 0, 0.5);
+}
+
+.signinPage {
+  height: 100%;
+}
+
+.no-account-yet {
+  margin-top: 20px;
 }
 
 .form-signin {
