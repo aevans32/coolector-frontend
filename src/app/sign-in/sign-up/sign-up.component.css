@@ -9,7 +9,7 @@ body {
   font-family: "Lato", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(#d0d6d9, #b1b4ba);
+  background: linear-gradient(#385dc4, #1d4949);
   color: #d9e2f1;
   min-height: 100vh;
 }
@@ -42,9 +42,21 @@ form {
   max-width: 40rem;
   margin: 3rem auto;
   padding: 2rem;
-  background: linear-gradient(180deg, #253c3c, #1d4949);
+  background: linear-gradient(180deg, #ffffff, #f0ecec);
   border-radius: 8px;
   box-shadow: 0 0 16px 1px rgba(0, 0, 0, 0.5);
+}
+
+.signUpPage {
+    background: linear-gradient(180deg, #385dc4, #1d4949);
+}
+
+.top-space {
+    height: 45px;
+  }
+
+.bottom-space {
+    height: 65px;
 }
 
 .control,
@@ -65,6 +77,7 @@ fieldset {
   font-weight: bold;
 }
 
+/* text boxes */
 .control input {
   display: block;
   width: 100%;
@@ -73,10 +86,12 @@ fieldset {
   font-size: 1rem;
   border-radius: 4px;
   border: 1px solid #758a8a;
-  background-color: #869999;
+  /* color for untouched boxes next */
+  background-color: #dbdbb5; 
   color: #142020;
 }
 
+/* DROP DOWN options */
 .control select {
   display: block;
   width: 100%;
@@ -85,7 +100,7 @@ fieldset {
   font-size: 1rem;
   border-radius: 4px;
   border: 1px solid #758a8a;
-  background-color: #869999;
+  background-color: #dbdbb5; 
   color: #142020;
 }
 
