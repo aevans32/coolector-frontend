@@ -56,86 +56,26 @@
         </div>
       </div>
   
-      <fieldset formGroupName="address">
-        <legend>Your Address</legend>
-  
-        <div class="control-row">
-          <div class="control">
-            <label for="street">Street</label>
-            <input type="text" id="street" name="street" formControlName="street"/>
-          </div>
-  
-          <div class="control">
-            <label for="number">Number</label>
-            <input type="text" id="number" name="number" formControlName="number"/>
-          </div>
-        </div>
-  
-        <div class="control-row">
-          <div class="control">
-            <label for="postal-code">Postal Code</label>
-            <input type="text" id="postal-code" name="postal-code" formControlName="postalCode"/>
-          </div>
-  
-          <div class="control">
-            <label for="city">City</label>
-            <input type="text" id="city" name="city" formControlName="city"/>
-          </div>
-        </div>
-      </fieldset>
+      
     </div>
   
     <hr />
   
     <div class="control-row">
       <div class="control">
-        <label for="role">What best describes your role?</label>
+        <label for="role">How are you related to Coolector's founders?</label>
         <select id="role" name="role" formControlName="roles">
-          <option value="student">Student</option>
-          <option value="teacher">Teacher</option>
-          <option value="employee">Employee</option>
-          <option value="founder">Founder</option>
+          <option value="student">Penn State Classmate</option>
+          <option value="teacher">Professor or TA</option>
+          <option value="employee">Co-Worker</option>
+          <option value="founder">Friend or Family Member</option>
           <option value="other">Other</option>
         </select>
       </div>
     </div>
   
-    <!--formArrayName links to the Form Array, individual values take index positions instead of names-->
-    <fieldset formArrayName="source">
-      <legend>How did you find us?</legend>
-      <div class="control">
-        <input
-          type="checkbox"
-          id="google"
-          name="acquisition"
-          value="google"
-          formControlName="0"
-        />
-        <label for="google">Google</label>
-      </div>
-  
-      <div class="control">
-        <input
-          type="checkbox"
-          id="friend"
-          name="acquisition"
-          value="friend"
-          formControlName="1"
-        />
-        <label for="friend">Referred by friend</label>
-      </div>
-  
-      <div class="control">
-        <input
-          type="checkbox"
-          id="other"
-          name="acquisition"
-          value="other"
-          formControlName="2"
-        />
-        <label for="other">Other</label>
-      </div>
-    </fieldset>
+    
+    
   
     <div class="control-row">
       <div class="control">
