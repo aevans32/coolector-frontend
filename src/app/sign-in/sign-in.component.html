@@ -2,7 +2,8 @@
   <div class="top-space"></div>
     <form [formGroup]="reactiveForm" class="form-signin " (ngSubmit)="onSubmit()">
       <img class="form-image mb-4" src="assets/logocoolectorv1.png" alt="Coolector Logo" width="300" height="172">
-      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      <h1 class="h3 mb-3 font-weight-normal">Welcome!<br>Please sign in</h1>
+      
 
       <!--email input-->
       <label for="inputEmail" class="sr-only">Email address</label>
@@ -17,7 +18,7 @@
       <!--Password input-->
       <label for="inputPassword" class="sr-only">Password</label>
       <input type="password" id="inputPassword" formControlName="reactivePassword" class="form-control" placeholder="Password" required="">
-      <div class="signIn-error-message" style="width: 300px; height: 70px">
+      <div class="signIn-error-message" style="width: 300px; height: 60px">
       @if (passwordIsInvalid && passwordErrors) {
         <p class="control-error">{{ passwordErrors }}</p>}
       </div>
@@ -39,7 +40,7 @@
       </div>
       
 
-      <p class="mt-5  text-muted">© 2017-2018</p>
+      <p class="mt-5  text-muted">By: Group 2 - IST 440 - Penn State</p>
     </form>
 
     <div class="bottom-space"></div>
