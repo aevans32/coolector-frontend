@@ -1,12 +1,27 @@
-<!--This is gonna get Angular omponents now with more changes-->
 <div class="text-center">
-    <form [formGroup]="reactiveForm" class="form-signin" (ngSubmit)="onSubmit($event)">
-      <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+  <div class="top-space"></div>
+    <form [formGroup]="reactiveForm" class="form-signin " (ngSubmit)="onSubmit()">
+      <img class="form-image mb-4" src="assets/logocoolectorv1.png" alt="Coolector Logo" width="300" height="172">
       <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+      <!--email input-->
       <label for="inputEmail" class="sr-only">Email address</label>
-      <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+      <input type="email" id="inputEmail" formControlName="reactiveEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+      <div class="signIn-error-message" style="width: 300px; height: 25px">
+        @if (emailIsInvalid && emailErrors) {
+          <p class="control-error">{{ emailErrors }}</p>}
+      </div>
+        
+      
+
+      <!--Password input-->
       <label for="inputPassword" class="sr-only">Password</label>
-      <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+      <input type="password" id="inputPassword" formControlName="reactivePassword" class="form-control" placeholder="Password" required="">
+      <div class="signIn-error-message" style="width: 300px; height: 70px">
+      @if (passwordIsInvalid && passwordErrors) {
+        <p class="control-error">{{ passwordErrors }}</p>}
+      </div>
+
       <div class="checkbox mb-3">
         <label>
           <input type="checkbox" value="remember-me"> Remember me
@@ -15,5 +30,6 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       <p class="mt-5 mb-3 text-muted">© 2017-2018</p>
     </form>
+
+    <div class="bottom-space"></div>
 </div>
-<!--moooooore changeeees-->
