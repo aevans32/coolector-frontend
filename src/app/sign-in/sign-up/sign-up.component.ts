@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { UserService } from '../../user/user.service';
 
 
 /*
@@ -32,6 +33,8 @@ function equalValues(controlName1: string, controlName2: string) {
   styleUrl: './sign-up.component.css'
 })
 export class SignUpComponent {
+
+  constructor(private userService: UserService) {}
 
   form = new FormGroup({
     // INITIALIZATION OF EMAIL
@@ -79,10 +82,19 @@ export class SignUpComponent {
       return;
     }
 
-    console.log(this.form);
+    const { email, passwords, firstName, lastName, relation } = this.form.value;
+
+    this.userService.addUser(
+      email ?? '',
+      passwords?.password ?? '',
+      firstName ?? '',
+      lastName ?? '',
+      relation ?? ''
+    );
+
+    console.log('Form submitted and user added.');
 
     
-
   }
 
 }
