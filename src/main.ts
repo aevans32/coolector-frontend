@@ -34,6 +34,7 @@ function loggingInterceptor (
 
 // withInterceptors is necessary to intercept Http requests
 bootstrapApplication(AppComponent, {
+  ...appConfig, // Spread the configuration from appConfig
   providers: [provideHttpClient(
     withInterceptors([loggingInterceptor])
   )]
