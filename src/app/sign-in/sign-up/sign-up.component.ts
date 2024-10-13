@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../user/user.service';
+import { Router } from '@angular/router';
 
 
 /*
@@ -34,7 +35,10 @@ function equalValues(controlName1: string, controlName2: string) {
 })
 export class SignUpComponent {
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   form = new FormGroup({
     // INITIALIZATION OF EMAIL
@@ -94,7 +98,8 @@ export class SignUpComponent {
 
     console.log('Form submitted and user added.');
 
-    
+    this.router.navigate(['sign-in']);
+
   }
 
 }
