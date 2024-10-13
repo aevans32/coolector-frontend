@@ -39,6 +39,7 @@ form {
 
 .signinPage {
   height: 100%;
+  height: auto;
 }
 
 .no-account-yet {
