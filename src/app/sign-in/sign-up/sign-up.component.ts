@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 
 /*
@@ -34,10 +34,54 @@ function equalValues(controlName1: string, controlName2: string) {
 export class SignUpComponent {
 
   form = new FormGroup({
-    
+    // INITIALIZATION OF EMAIL
+    email: new FormControl('', {
+      // EMAIL VALIDATORS
+      validators: [Validators.email, Validators.required]
+    }),
+    // INITIALIZATION OF THE PASSWORDS GROUP
+    passwords: new FormGroup({
+      // THE FIRST PASSWORD
+      password: new FormControl('', {
+        validators: [Validators.required, Validators.minLength(6)]
+      }),
+      // THE SECOND PASSWORD TO CONFIRM
+      confirmPassword: new FormControl('', {
+        validators: [Validators.required, Validators.minLength(6)]
+      })
+    }, {
+      // VALIDATORS FOR THE PASSWORDS GROUP, SO THEY MATCH
+      validators: [equalValues('password', 'confirmPassword')]
+    }),
+    // INITIALIZTION OF FIRST AND LAST NAME ALONG WITH VALIDATORS
+    firstName: new FormControl('', {validators: [Validators.required]}),
+    lastName: new FormControl('', {validators: [Validators.required]}),
+    // NEXT IS THE DROPDOWN FOR HOW ARE YOU RELATED TO THE FOUNDERS
+    relation: new FormControl
+    // only a set number of posibilities
+      <'classmate' | 'professor' | 'coworker' | 'friend' | 'other'>
+      // it has to start with a value, so we select the first of the list, its akin to the empty strings above
+      ('classmate', {
+        // validators for the dropdown
+        validators: [Validators.required]
+      }),
+    // THE I AGREE BUTTON
+    // accepting terms and conditions its necessary so it has to change to true, it starts with false    
+    agree: new FormControl(false, {validators: [Validators.required]})
   });
 
+
+
   onSubmit() {
+
+    if (this.form.invalid) {
+      console.log('INVALID FORM');
+      return;
+    }
+
+    console.log(this.form);
+
+    
 
   }
 
