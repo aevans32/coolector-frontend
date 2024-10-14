@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { debounceTime, of } from 'rxjs';
+import { UserService } from '../user/user.service';
 
 
 // custom control for parameter validation
@@ -55,7 +56,7 @@ export class SignInComponent {
   private destroyRef = inject(DestroyRef);
 
   constructor (
-    private authService: AuthService,
+    private userService: UserService,
     private router: Router
   ) {}
 
@@ -150,17 +151,31 @@ export class SignInComponent {
 
   // if the form is invalid then the mapping for dashboard wont activate
   onSubmit() {
-    const enteredEmail = this.reactiveForm.controls.reactiveEmail;
-    const enteredPassword = this.reactiveForm.controls.reactivePassword;
+    const enteredEmail = this.reactiveForm.controls.reactiveEmail.value;
+    const enteredPassword = this.reactiveForm.controls.reactivePassword.value;
 
-    if (this.reactiveForm.invalid) {
+    if (this.reactiveForm.invalid || !enteredEmail || !enteredPassword) {
       console.log('INVALID FORM');
       return;
     }
 
-    // Here you could validate form fields and authenticate with a backend
-    this.authService.login(); // log the user in
-    this.router.navigate(['dashboard']); //navigate to the dashboard
+    // Call method from user service
+    this.userService.login(enteredEmail, enteredPassword).subscribe(
+      {
+        next: (token) => 
+        {
+          console.log('Login successful, token:', token);
+          // Navigate to the dashboard if login is successful
+          this.router.navigate(['dashboard']); //navigate to the dashboard
+        },
+        error: (error) => 
+        {
+          console.log('Login failed', error.message);
+          // You can also add additional UI feedback for login failure here
+        }
+      }
+    );
+    
   }
 
   newSignUp(event: Event): void {

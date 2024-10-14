@@ -88,13 +88,13 @@ export class SignUpComponent {
 
     const { email, passwords, firstName, lastName, relation } = this.form.value;
 
-    this.userService.addUser(
-      email ?? '',
-      passwords?.password ?? '',
-      firstName ?? '',
-      lastName ?? '',
-      relation ?? ''
-    );
+    // this.userService.addUser(
+    //   email ?? '',
+    //   passwords?.password ?? '',
+    //   firstName ?? '',
+    //   lastName ?? '',
+    //   relation ?? ''
+    // );
 
     console.log('Form submitted and user added.');
 
