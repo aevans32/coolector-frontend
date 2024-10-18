@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { User } from './user.model';
 import { ErrorService } from '../shared/error.service';
 import { HttpClient } from '@angular/common/http';
@@ -17,6 +17,9 @@ export class UserService {
   private errorService = inject(ErrorService);
   // http client and signal elements from Angular libraries
   private httpClient = inject(HttpClient);
+
+  private destroyRef = inject(DestroyRef);
+
   
   // TODO: maybe this signal also needs to go bye bye
   // signal for the current user
@@ -81,40 +84,134 @@ export class UserService {
      * This is typically passed as the second argument in the .post method, 
      * where Angular automatically converts it into a JSON payload for you.
      */
-    login (email: string, password: string)
-    {
-      // Credentials taken from the login page
-      const loginPayload: UserLoginDTO = 
-      {
-        email,
-        password
-      };
+    // login (email: string, password: string)
+    // {
+    //   // Credentials taken from the login page
+    //   const loginPayload: UserLoginDTO = 
+    //   {
+    //     email,
+    //     password
+    //   };
 
       
-      return this.httpClient
-      .post<{ token: string }>(`${this.rootUrl}/login`, loginPayload)
-      .pipe(
-        tap((response) =>
-        {
-          // This performs a side effect (logging the token), but doesn't modify the response
-          console.log('Login successful, token:', response.token);
-          // Could store the token here but no change to the response
-        }),
-        map((response) => response.token), // Only extract the token in this case
-        catchError((errorRes) => {
-          // Handle error: If login fails, show error message from the API response
-          if (errorRes.status === 401 && errorRes.error && errorRes.error.message) {
-            // If Unauthorized (401), use the message from the API response
-            this.errorService.showError(errorRes.error.message);
-          } else {
-            // Handle any other error status code (like server issues)
-            this.errorService.showError('Login failed. Please try again later.');
+
+    //   const subscription = this.httpClient
+    //     .post<{ token: string }>(`${this.rootUrl}/login`, loginPayload)
+    //     .pipe(
+    //       tap((response) =>
+    //       {
+    //         // This performs a side effect (logging the token), but doesn't modify the response
+    //         console.log('Login successful, token:', response.token);
+    //         // Could store the token here but no change to the response
+    //       }),
+    //       map((response) => response.token), // Only extract the token in this case
+    //       catchError((errorRes) => {  
+    //         // Handle error: If login fails, show error message from the API response
+    //         if (errorRes.status === 401 && errorRes.error && errorRes.error.message) {
+    //           // If Unauthorized (401), use the message from the API response
+    //           this.errorService.showError(errorRes.error.message);
+    //         } else {
+    //           // Handle any other error status code (like server issues)
+    //           this.errorService.showError('Login failed. Any other error happened.' + errorRes.message);
+    //         }
+    //         // Throw the error after displaying the message
+    //         return throwError(() => new Error('Login failed.'));
+    //       })
+    //     ).subscribe({
+    //       next: (token) => {
+    //         console.log('Token received:', token);
+    //         // Any additional logic once the token is received, like storing it
+    //       },
+    //       error: (error) => {
+    //         console.log('Login error', error.message);
+    //       }
+    //     });
+
+    //     // Unsubscribe from the login subscription to prevent memory leaks
+    //     this.destroyRef.onDestroy(() =>
+    //     {
+    //       subscription.unsubscribe();
+    //     });
+    //   }
+
+
+      login(email: string, password: string) {
+        // Credentials taken from the login page
+        const loginPayload: UserLoginDTO = {
+          email,
+          password
+        };
+      
+        
+
+        return this.httpClient
+        .post(`${this.rootUrl}/login`, loginPayload)
+        .pipe(
+          catchError(error => 
+          {
+            this.errorService.showError('Failed at user.services.ts');
+            return throwError(() => new Error('This is the thrown errror at user.service.'));
           }
-          // Throw the error after displaying the message
-          return throwError(() => new Error('Login failed.'));
-        })
-      );
-    }
+          )
+        )
+
+
+
+        // // Send the POST request with the login payload
+        // return this.httpClient
+        //   .post<{ token: string }>(`${this.rootUrl}/login`, loginPayload)
+        //   .pipe(
+        //     // Log the success and handle token response
+        //     tap(response => {
+        //       console.log('Login successful, token:', response.token);
+        //       // Store the token or perform any side effects as needed
+        //     }),
+        //     // Handle errors from the request
+        //     catchError(errorRes => {
+        //       // If Unauthorized (401), use the message from the API response
+        //       if (errorRes.status === 401 && errorRes.error && errorRes.error.message) {
+        //         this.errorService.showError(errorRes.error.message);
+        //       } else {
+        //         // Handle any other error status code
+        //         this.errorService.showError('Login failed at frontend: ' + errorRes.message);
+        //       }
+        //       // Return the error so it can be caught by the caller
+        //       return throwError(() => new Error('Login failed.'));
+        //     })
+        //   );
+
+
+
+
+      }
+      
+
+
+
+      // return this.httpClient
+      // .post<{ token: string }>(`${this.rootUrl}/login`, loginPayload)
+      // .pipe(
+      //   tap((response) =>
+      //   {
+      //     // This performs a side effect (logging the token), but doesn't modify the response
+      //     console.log('Login successful, token:', response.token);
+      //     // Could store the token here but no change to the response
+      //   }),
+      //   map((response) => response.token), // Only extract the token in this case
+      //   catchError((errorRes) => {
+      //     // Handle error: If login fails, show error message from the API response
+      //     if (errorRes.status === 401 && errorRes.error && errorRes.error.message) {
+      //       // If Unauthorized (401), use the message from the API response
+      //       this.errorService.showError(errorRes.error.message);
+      //     } else {
+      //       // Handle any other error status code (like server issues)
+      //       this.errorService.showError('Login failed. Any other error happened.' + errorRes.message);
+      //     }
+      //     // Throw the error after displaying the message
+      //     return throwError(() => new Error('Login failed.'));
+      //   })
+      // );
+    
     // ----------end of login PUT method----------
 
 

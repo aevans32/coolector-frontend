@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../user/user.service';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 
 /*
@@ -34,6 +35,9 @@ function equalValues(controlName1: string, controlName2: string) {
   styleUrl: './sign-up.component.css'
 })
 export class SignUpComponent {
+
+  
+
 
   constructor(
     private userService: UserService,
@@ -98,8 +102,13 @@ export class SignUpComponent {
 
     console.log('Form submitted and user added.');
 
-    this.router.navigate(['sign-in']);
+    // this.router.navigate(['sign-in']);
 
   }
+
+
+
+
+  
 
 }

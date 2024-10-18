@@ -5,18 +5,9 @@ import { Router } from '@angular/router';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { debounceTime, of } from 'rxjs';
 import { UserService } from '../user/user.service';
+import { HttpClient } from '@angular/common/http';
+import { routes } from '../app.routes';
 
-
-// custom control for parameter validation
-function mustContainQuestionMark(control: AbstractControl) {
-  // includes is a JS method to check just that
-  if (control.value.includes('?')) {
-    // returning null tells Angular that this control is valid
-    return null;
-  }
-  // alternatively, returns an object with a property set to true
-  return { doesNotContainQuestionMark: true };
-}
 
 
 // ⚠️TODO: change this for a method that cheques the database
@@ -53,13 +44,25 @@ if (savedForm) {
 })
 export class SignInComponent {
 
+  private httpClient = inject(HttpClient);
+
   private destroyRef = inject(DestroyRef);
 
+  private authService = inject(AuthService);
+
+  // TODO: see if the routes can be injected
+  // private router = inject(routes);
+
   constructor (
-    private userService: UserService,
     private router: Router
   ) {}
 
+  /**
+   * This is where the form's elemements (email and pw)
+   * get converted into variables.
+   * These variables are manipulated upon clicking the Login Button.
+   * Before that there are some pre-login validations .
+   */
   reactiveForm = new FormGroup({
     reactiveEmail: new FormControl(initialEmailValue, {
       validators: [Validators.email, Validators.required],
@@ -69,6 +72,8 @@ export class SignInComponent {
       validators: [Validators.required, Validators.minLength(6)]
     })
   });
+
+  
 
   get emailIsInvalid() {
     return (
@@ -131,12 +136,37 @@ export class SignInComponent {
 
       return null;
     }
+    // ===========================================  end of pre login validations ===========================================
   
   
   
 
-  // auto populate email with previous values
+  /**
+   * This is what happens when the site gets loaded
+   */
   ngOnInit() {
+
+    
+      // TODO: replace this getAll method for faster tests to "wake up" the backend and database.
+      // Make GET request to the .NET backend API
+      const subscription1 = this.httpClient.get('https://localhost:7096/api/user/getAll')
+        .subscribe({
+          next: (resData) => {
+            // Log the response to the console
+            console.log(resData);
+          },
+          error: (err) => {
+            // Handle any errors
+            console.error('Error fetching user data:', err);
+          }
+        });
+  
+      // Unsubscribe when the component is destroyed
+      this.destroyRef.onDestroy(() => {
+        subscription1.unsubscribe();
+      });
+
+
     const subscription = this.reactiveForm.valueChanges.
     pipe(debounceTime(500)).
     subscribe({
@@ -147,41 +177,64 @@ export class SignInComponent {
 
     this.destroyRef.onDestroy(() => subscription.unsubscribe());
   }
+  // ===========================================  end of ngOnInit ===========================================
   
 
-  // if the form is invalid then the mapping for dashboard wont activate
+
+
+  /**
+   * This is what happens when you hit the sign in button
+   * @returns 
+   */
   onSubmit() {
     const enteredEmail = this.reactiveForm.controls.reactiveEmail.value;
     const enteredPassword = this.reactiveForm.controls.reactivePassword.value;
 
+    // TODO: if the form is invalid we need to have a display for the user instead of just the terminal.
     if (this.reactiveForm.invalid || !enteredEmail || !enteredPassword) {
       console.log('INVALID FORM');
       return;
     }
 
-    // Call method from user service
-    this.userService.login(enteredEmail, enteredPassword).subscribe(
+
+    const subscription2 = this.authService.login(enteredEmail, enteredPassword).subscribe(
       {
-        next: (token) => 
+        next: (resData) =>
         {
-          console.log('Login successful, token:', token);
-          // Navigate to the dashboard if login is successful
-          this.router.navigate(['dashboard']); //navigate to the dashboard
+          // Log success response
+          console.log('Login successful:', resData);
         },
-        error: (error) => 
+        error: (err) => 
         {
-          console.log('Login failed', error.message);
-          // You can also add additional UI feedback for login failure here
+          // Handle error response (the message comes from the service)
+          console.error('Error at sign-in component:', err.message);
         }
       }
     );
-    
-  }
 
+    // Unsubscribe when the component is destroyed
+    this.destroyRef.onDestroy(() => {
+      subscription2.unsubscribe();
+    });
+    
+
+    // TODO: NOW NAVIGATE TO THE DASHBOARD
+
+  }
+  // ===========================================  end of onSubmit ===========================================
+
+
+
+
+  /**
+   * This is where you go to make a new user
+   * @param event 
+   */
   newSignUp(event: Event): void {
     event.preventDefault();
 
     this.router.navigate(['sign-up']);
   }
+  // ===========================================  end of newSignUp ===========================================
 
 }

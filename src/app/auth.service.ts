@@ -1,14 +1,53 @@
-import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { inject, Injectable } from "@angular/core";
+import { response } from "express";
+import { catchError, tap, throwError } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
+
+    private httpClient = inject(HttpClient);
 
     // not authenticated by default
     private isAuthenticated = false;
 
     // Set Authentication status to true
-    login(): void {
-        this.isAuthenticated = true;
+    login(email: string, password: string) 
+    {
+        const loginData = 
+        {
+            email: email,
+            password: password
+        };
+
+        return this.httpClient
+        .post<any>('https://localhost:7096/api/user/login', loginData, 
+        {
+            headers: { 'Content-Type': 'application/json', 'Accept': '*/*' }
+        })
+        .pipe(
+            tap((response) =>
+            {
+                const token = response.token;
+                if (token)
+                {
+                    sessionStorage.setItem('authToken', token);
+                    console.log('Token stored in sessionStorage:', token);
+                }
+
+            }
+            ),
+            catchError((error) => 
+            {
+                console.log('Login error at auth.service:', error);
+                return throwError(() => new Error ('Auth service error thrown.'));
+            })
+        )
+    }
+
+    // Method to retrieve the token from sessionStorage
+    getToken(): string | null {
+        return sessionStorage.getItem('authToken');
     }
 
     // authenticated to false upon logout
