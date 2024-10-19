@@ -23,14 +23,14 @@ export class UserService {
   
   // TODO: maybe this signal also needs to go bye bye
   // signal for the current user
-  private currentUserSig = signal<User>({
-    id: 0,            
-    email: '',
-    firstName: '',
-    lastName: '',
-    password: '',
-    relation: 'classmate'
-  });
+  // private currentUserSig = signal<User>({
+  //   id: 0,            
+  //   email: '',
+  //   firstName: '',
+  //   lastName: '',
+  //   password: '',
+  //   relation: 'classmate'
+  // });
 
   private rootUrl = "http://localhost:7096/api/user";
 

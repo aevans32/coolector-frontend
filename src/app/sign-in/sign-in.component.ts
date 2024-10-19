@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { debounceTime, of } from 'rxjs';
@@ -38,7 +38,7 @@ if (savedForm) {
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css'
 })
@@ -226,15 +226,15 @@ export class SignInComponent {
 
 
 
-  /**
-   * This is where you go to make a new user
-   * @param event 
-   */
-  newSignUp(event: Event): void {
-    event.preventDefault();
+  // /**
+  //  * This is where you go to make a new user
+  //  * @param event 
+  //  */
+  // newSignUp(event: Event): void {
+  //   event.preventDefault();
 
-    this.router.navigate(['sign-up']);
-  }
+  //   this.router.navigate(['sign-up']);
+  // }
   // ===========================================  end of newSignUp ===========================================
 
 }

@@ -10,7 +10,10 @@ const canActivateDashboard = () => inject(AuthService).isLoggedIn();
 
 export const routes: Routes = [
     { path: '', redirectTo: 'sign-in', pathMatch: 'full' }, // Redirect to the sign-in page by default
-    { path: 'sign-in', component: SignInComponent }, // Route to the sign-in component
+    { 
+        path: 'sign-in',                        // Route to the sign-in component
+        component: SignInComponent 
+    }, 
     { 
         path: 'dashboard', 
         component: DashboardComponent,
