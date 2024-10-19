@@ -4,5 +4,6 @@ export interface User {
     password: string;
     firstName: string;
     lastName: string;
-    relation: 'classmate' | 'professor' | 'coworker' | 'friend' | 'other'; 
+    relation: 'classmate' | 'professor' | 'coworker' | 'friend' | 'other';
+    companyCode: number;
 }
