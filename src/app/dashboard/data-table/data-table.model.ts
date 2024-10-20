@@ -1,7 +1,12 @@
 export interface dataRow {
-    id: string;
-    column1: string;
-    column2: string;
-    column3: string;
-    column4: string;
+    accntCode: string;
+    clientID: string;
+    clientName: string;
+    amount: string;
+    lateFees: string;
+    minAmount: string;
+    issueDate: string;
+    expDate: string;
+    status: string;
+    serviceCode: string;
 }

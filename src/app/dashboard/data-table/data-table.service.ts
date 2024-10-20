@@ -8,13 +8,13 @@ export class DataTableService {
   // Simulate fetching data, this could be replaced by an HTTP request to an API
   private tableData = signal<dataRow[]>([
     {
-        id: '1,001', column1: 'random', column2: 'data', column3: 'placeholder', column4: 'text'
+      accntCode: '1', clientID: '1,001', clientName: 'random', amount: 'data', lateFees: 'placeholder', minAmount: 'text', issueDate: 'hh', expDate: 'sdfd', status: 'dsda', serviceCode: 'sdadsa'
     },
     {
-        id: '1,002', column1: 'placeholder', column2: 'irrelevant', column3: 'visual', column4: 'layout'
+      accntCode: '1', clientID: '1,001', clientName: 'random', amount: 'data', lateFees: 'placeholder', minAmount: 'text', issueDate: 'hh', expDate: 'sdfd', status: 'dsda', serviceCode: 'sdadsa'
     },
     {
-        id: '1,003', column1: 'data', column2: 'rich', column3: 'dashboard', column4: 'tabular' 
+      accntCode: '1', clientID: '1,001', clientName: 'random', amount: 'data', lateFees: 'placeholder', minAmount: 'text', issueDate: 'hh', expDate: 'sdfd', status: 'dsda', serviceCode: 'sdadsa'
     },
     // Add more data here...
   ]);

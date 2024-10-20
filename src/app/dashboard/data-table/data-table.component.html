@@ -3,20 +3,30 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Column 1</th>
-          <th scope="col">Column 2</th>
-          <th scope="col">Column 3</th>
-          <th scope="col">Column 4</th>
+          <th scope="col">Client ID</th>
+          <th scope="col">Client Name</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Late Fees</th>
+          <th scope="col">Min Amount</th>
+          <th scope="col">Issue Date</th>
+          <th scope="col">Exp Date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Service</th>
         </tr>
       </thead>
       <tbody>
         <!-- Use *ngFor to loop through the rows in tableData -->
         <tr *ngFor="let row of tableData()">
-          <td>{{ row.id }}</td>
-          <td>{{ row.column1 }}</td>
-          <td>{{ row.column2 }}</td>
-          <td>{{ row.column3 }}</td>
-          <td>{{ row.column4 }}</td>
+          <td>{{ row.accntCode }}</td>
+          <td>{{ row.clientID }}</td>
+          <td>{{ row.clientName }}</td>
+          <td>{{ row.amount }}</td>
+          <td>{{ row.lateFees }}</td>
+          <td>{{ row.minAmount }}</td>
+          <td>{{ row.issueDate }}</td>
+          <td>{{ row.expDate }}</td>
+          <td>{{ row.status }}</td>
+          <td>{{ row.serviceCode }}</td>
         </tr>
         <!-- Display this row if there is no data -->
         <tr *ngIf="tableData().length === 0">
