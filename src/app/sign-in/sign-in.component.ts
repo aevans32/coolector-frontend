@@ -202,10 +202,10 @@ export class SignInComponent {
     const subscription2 = this.authService.login(enteredEmail, enteredPassword)
     .subscribe(
       {
-        next: (resData) =>
+        next: () =>
         {
           // Log success response
-          console.log('Login successful:', resData);
+          console.log('Login successful.');
           this.router.navigate(['/main-view']);
         },
         error: (err) => 

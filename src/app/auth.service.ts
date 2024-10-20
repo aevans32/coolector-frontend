@@ -35,7 +35,7 @@ export class AuthService {
                 if (token)
                 {
                     sessionStorage.setItem('authToken', token);
-                    console.log('Token stored in sessionStorage:', token);
+                    console.log('Token stored in sessionStorage.');
                 }
             }
             ),
