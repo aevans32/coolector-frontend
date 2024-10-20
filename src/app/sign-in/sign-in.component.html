@@ -1,3 +1,5 @@
+
+
 <div class="signinPage text-center h-100">
   <div class="top-space"></div>
     <form [formGroup]="reactiveForm" class="form-signin " (ngSubmit)="onSubmit()">
@@ -35,9 +37,6 @@
       <div class="signIn-error-message" style="width: 300px; height: 50px">
         @if (emailIsInvalid || passwordIsInvalid && signInErrors) {
           <p class="error-singIn-msg">{{ signInErrors }}</p>
-        }
-        @if (invalidSignIn) {
-          <p>{{ invalidSignIn }}</p>
         }
       </div>
 

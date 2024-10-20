@@ -182,9 +182,7 @@ export class SignInComponent {
   // ===========================================  end of ngOnInit ===========================================
   
 
-  get invalidSignIn() {
-    return 'Invalid sign in.';
-  }
+  
 
 
   /**
@@ -198,12 +196,12 @@ export class SignInComponent {
     // TODO: if the form is invalid we need to have a display for the user instead of just the terminal.
     if (this.reactiveForm.invalid || !enteredEmail || !enteredPassword) {
       console.log('INVALID FORM');
-      this.invalidSignIn;
       return;
     }
 
 
-    const subscription2 = this.authService.login(enteredEmail, enteredPassword).subscribe(
+    const subscription2 = this.authService.login(enteredEmail, enteredPassword)
+    .subscribe(
       {
         next: (resData) =>
         {

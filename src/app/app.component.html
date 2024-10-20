@@ -1,3 +1,13 @@
+<!--We render the app wide error from ErrorService 
+on top of every other UI element if this error gets triggered
+if the error() signal has a truthy value, it means it has been triggered-->
+@if (error()) {
+  <!--Make sure <app-error-modal /> is imported and added to the imports array of this component-->
+  <!--Title is unbounded and not very significant here,
+  but the message is bounded to a property of the error() signal-->
+  <app-error-modal title="An error ocurred!" [message]="error()"/>
+}
+
 <ng-container *ngIf="isAuthenticated()">
 <app-header/>
 <div class="container-fluid">

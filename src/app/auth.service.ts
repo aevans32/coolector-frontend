@@ -2,11 +2,14 @@ import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { response } from "express";
 import { catchError, tap, throwError } from "rxjs";
+import { ErrorService } from "./errorHandler/error.service";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
     private httpClient = inject(HttpClient);
+
+    private errorService = inject(ErrorService);
 
     // not authenticated by default
     private isAuthenticated = false;
@@ -34,12 +37,19 @@ export class AuthService {
                     sessionStorage.setItem('authToken', token);
                     console.log('Token stored in sessionStorage:', token);
                 }
-
             }
             ),
             catchError((error) => 
             {
-                console.log('Login error at auth.service:', error);
+                if (error.status === 401)
+                {
+                    this.errorService.showError('Unauthorized - Invalid email or password.');
+                }
+                else 
+                {
+                    this.errorService.showError('Please try again later.');
+                }
+                
                 return throwError(() => new Error ('Auth service error thrown.'));
             })
         )

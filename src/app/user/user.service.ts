@@ -1,6 +1,5 @@
 import { DestroyRef, inject, Injectable, signal } from '@angular/core';
 import { User } from './user.model';
-import { ErrorService } from '../shared/error.service';
 import { HttpClient } from '@angular/common/http';
 import { UserLoginDTO } from './user-login.dto';
 import { catchError, map, tap, throwError } from 'rxjs';
@@ -13,8 +12,7 @@ import { response } from 'express';
 export class UserService {
 
 
-  // injects the Error Service component to handle errors application wide
-  private errorService = inject(ErrorService);
+  
   // http client and signal elements from Angular libraries
   private httpClient = inject(HttpClient);
 
@@ -135,25 +133,25 @@ export class UserService {
     //   }
 
 
-      login(email: string, password: string) {
-        // Credentials taken from the login page
-        const loginPayload: UserLoginDTO = {
-          email,
-          password
-        };
+      // login(email: string, password: string) {
+      //   // Credentials taken from the login page
+      //   const loginPayload: UserLoginDTO = {
+      //     email,
+      //     password
+      //   };
       
         
 
-        return this.httpClient
-        .post(`${this.rootUrl}/login`, loginPayload)
-        .pipe(
-          catchError(error => 
-          {
-            this.errorService.showError('Failed at user.services.ts');
-            return throwError(() => new Error('This is the thrown errror at user.service.'));
-          }
-          )
-        )
+      //   return this.httpClient
+      //   .post(`${this.rootUrl}/login`, loginPayload)
+      //   .pipe(
+      //     catchError(error => 
+      //     {
+      //       // this.errorService.showError('Failed at user.services.ts');
+      //       return throwError(() => new Error('This is the thrown errror at user.service.'));
+      //     }
+      //     )
+      //   )
 
 
 
@@ -256,4 +254,4 @@ export class UserService {
   //   // logging the operation
   //   console.log('User added:', newUser);
   // }
-}
+
