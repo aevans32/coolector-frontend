@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router, RouterLink } from '@angular/router';
 
@@ -49,6 +49,8 @@ export class SignInComponent {
   private destroyRef = inject(DestroyRef);
 
   private authService = inject(AuthService);
+
+  errorSignal = signal(''); // Signal for throwing a Sign In error
 
   // TODO: see if the routes can be injected
   // private router = inject(routes);
@@ -180,6 +182,9 @@ export class SignInComponent {
   // ===========================================  end of ngOnInit ===========================================
   
 
+  get invalidSignIn() {
+    return 'Invalid sign in.';
+  }
 
 
   /**
@@ -193,6 +198,7 @@ export class SignInComponent {
     // TODO: if the form is invalid we need to have a display for the user instead of just the terminal.
     if (this.reactiveForm.invalid || !enteredEmail || !enteredPassword) {
       console.log('INVALID FORM');
+      this.invalidSignIn;
       return;
     }
 
@@ -216,25 +222,7 @@ export class SignInComponent {
     this.destroyRef.onDestroy(() => {
       subscription2.unsubscribe();
     });
-    
-
-    // TODO: NOW NAVIGATE TO THE DASHBOARD
 
   }
   // ===========================================  end of onSubmit ===========================================
-
-
-
-
-  // /**
-  //  * This is where you go to make a new user
-  //  * @param event 
-  //  */
-  // newSignUp(event: Event): void {
-  //   event.preventDefault();
-
-  //   this.router.navigate(['sign-up']);
-  // }
-  // ===========================================  end of newSignUp ===========================================
-
 }

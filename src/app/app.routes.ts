@@ -6,7 +6,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SignUpComponent } from './sign-in/sign-up/sign-up.component';
 
 // using this method to see it user is authenticated
-const canActivateDashboard = () => inject(AuthService).isLoggedIn();
+const canActivateDashboard = () => inject(AuthService).getToken();
 
 export const routes: Routes = [
     { path: '', redirectTo: 'sign-in', pathMatch: 'full' }, // Redirect to the sign-in page by default

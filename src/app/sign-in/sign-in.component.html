@@ -28,17 +28,22 @@
           <input type="checkbox" value="remember-me"> Remember me
         </label>
       </div>
+
+
+      <!-- SIGN IN BUTTON -->
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       <div class="signIn-error-message" style="width: 300px; height: 50px">
         @if (emailIsInvalid || passwordIsInvalid && signInErrors) {
           <p class="error-singIn-msg">{{ signInErrors }}</p>
         }
+        @if (invalidSignIn) {
+          <p>{{ invalidSignIn }}</p>
+        }
       </div>
 
+      <!-- SIGN UP OR I DONT HAVE AN ACCOUNT YET BUTTON  -->
       <div class="no-account-yet">
         <a routerLink="/sign-up" >I don't have an account yet.</a>
-        <!-- <a href="" (click)="newSignUp($event)">I don't have an account yet.</a> -->
-        <!-- <button href="" (click)="newSignUp($event)">I don't have an account yet.</button> -->
       </div>
       
 

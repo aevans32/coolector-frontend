@@ -49,6 +49,7 @@ export class AuthService {
     getToken(): string | null {
         return sessionStorage.getItem('authToken');
     }
+    
 
     // authenticated to false upon logout
     logout(): void {
