@@ -2,31 +2,27 @@
     <table class="table table-striped table-sm">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Client ID</th>
-          <th scope="col">Client Name</th>
+          <th scope="col">Client</th>
+          <th scope="col">Status</th>
           <th scope="col">Amount</th>
-          <th scope="col">Late Fees</th>
-          <th scope="col">Min Amount</th>
+          <th scope="col">Bank</th>
           <th scope="col">Issue Date</th>
           <th scope="col">Exp Date</th>
-          <th scope="col">Status</th>
-          <th scope="col">Service</th>
+          <th scope="col">Pay Date</th>
+          <th scope="col">More Actions</th>
         </tr>
       </thead>
       <tbody>
         <!-- Use *ngFor to loop through the rows in tableData -->
         <tr *ngFor="let row of tableData()">
-          <td>{{ row.accntCode }}</td>
-          <td>{{ row.clientID }}</td>
-          <td>{{ row.clientName }}</td>
+          <td>{{ row.client }}</td>
+          <td>{{ row.status }}</td>
           <td>{{ row.amount }}</td>
-          <td>{{ row.lateFees }}</td>
-          <td>{{ row.minAmount }}</td>
+          <td>{{ row.bank }}</td>
           <td>{{ row.issueDate }}</td>
           <td>{{ row.expDate }}</td>
-          <td>{{ row.status }}</td>
-          <td>{{ row.serviceCode }}</td>
+          <td>{{ row.payDate }}</td>
+          <td>{{ row.moreActions }}</td>
         </tr>
         <!-- Display this row if there is no data -->
         <tr *ngIf="tableData().length === 0">

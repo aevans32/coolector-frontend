@@ -1,12 +1,10 @@
 export interface dataRow {
-    accntCode: string;
-    clientID: string;
-    clientName: string;
+    client: string;
+    status: string;
     amount: string;
-    lateFees: string;
-    minAmount: string;
+    bank: string;
     issueDate: string;
     expDate: string;
-    status: string;
-    serviceCode: string;
+    payDate: string;
+    moreActions: string;
 }
