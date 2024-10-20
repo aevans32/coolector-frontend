@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validator
 import { UserService } from '../../user/user.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../auth.service';
 
 
 /*
@@ -36,13 +37,10 @@ function equalValues(controlName1: string, controlName2: string) {
 })
 export class SignUpComponent {
 
-  
+  private router = inject(Router);
+  private authService = inject(AuthService);
+  private destroyRef = inject(DestroyRef);
 
-
-  constructor(
-    private userService: UserService,
-    private router: Router
-  ) {}
 
   form = new FormGroup({
     // INITIALIZATION OF EMAIL
@@ -85,20 +83,36 @@ export class SignUpComponent {
 
   onSubmit() {
 
-    if (this.form.invalid) {
+    const enteredEmail = this.form.controls.email.value;
+    const enteredPw = this.form.get('passwords.password')?.value;
+    const enteredFirstName = this.form.controls.firstName.value;
+    const enteredLastName = this.form.controls.lastName.value;
+    const enteredRelation = this.form.controls.relation.value;
+
+    if (this.form.invalid || !enteredEmail || !enteredPw || !enteredFirstName || !enteredLastName || !enteredRelation) {
       console.log('INVALID FORM');
       return;
     }
 
-    const { email, passwords, firstName, lastName, relation } = this.form.value;
+    const subscription = this.authService.newUser(enteredEmail,enteredPw, enteredFirstName,enteredLastName, enteredRelation)
+    .subscribe(
+      {
+        next: () =>
+        {
+          console.log('New user created.');
+          // TODO: navigate back to signin
+        },
+        error: (err) =>
+        {
+          console.error('Error at sign-up component:', err.message);
+        }
+      }
+    );
 
-    // this.userService.addUser(
-    //   email ?? '',
-    //   passwords?.password ?? '',
-    //   firstName ?? '',
-    //   lastName ?? '',
-    //   relation ?? ''
-    // );
+    this.destroyRef.onDestroy(() => 
+    {
+      subscription.unsubscribe();
+    });
 
     console.log('Form submitted and user added.');
 

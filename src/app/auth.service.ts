@@ -14,6 +14,8 @@ export class AuthService {
     // not authenticated by default
     private isAuthenticated = false;
 
+    private baseURL = 'https://localhost:7096/api/user';
+
     // Set Authentication status to true
     login(email: string, password: string) 
     {
@@ -24,7 +26,7 @@ export class AuthService {
         };
 
         return this.httpClient
-        .post<any>('https://localhost:7096/api/user/login', loginData, 
+        .post<any>( `${this.baseURL}/login`, loginData, 
         {
             headers: { 'Content-Type': 'application/json', 'Accept': '*/*' }
         })
@@ -69,5 +71,32 @@ export class AuthService {
     // return current authentication status
     isLoggedIn(): boolean {
         return this.isAuthenticated;
+    }
+
+
+    newUser(email: string, password: string, firstName: string, lastName: string, relation: string)
+    {
+        const signUpData = 
+        {
+            email: email, password: password, firstName: firstName, lastName: lastName, relation: relation
+        };
+
+        return this.httpClient
+        .post<any>(`${this.baseURL}/new`, signUpData,
+            {
+                headers: { 'Content-Type': 'application/json', 'Accept': '*/*' }
+            })
+        .pipe(
+            tap((response) =>
+            {
+                if (response.status === 200)
+                    console.log('User created successfully.');
+            }
+            ),
+            catchError((error) =>
+            {
+                return throwError(() => new Error ('Error at user creation.'));
+            })
+        )
     }
 }
