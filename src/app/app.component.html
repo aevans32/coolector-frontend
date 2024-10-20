@@ -8,22 +8,7 @@ if the error() signal has a truthy value, it means it has been triggered-->
   <app-error-modal title="An error ocurred!" [message]="error()"/>
 }
 
-<ng-container *ngIf="isAuthenticated()">
-<app-header/>
-<div class="container-fluid">
-  <div class="row">
-    <!--SIDE BAR COMPONENT HERE-->
-    <app-sidebar class="sidebar border border-right col-md-3 col-lg-2 p-0 bg-body-tertiary"/>
 
-    <!--MAIN CONTAINS: DASHBOARD, CHART, AND DATA TABLE-->
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-      <!--DASHBOARD COMPONENT HERE-->
-      <app-dashboard />
-    </main>
-     
-  </div>
-</div>
-</ng-container>
 
 <router-outlet></router-outlet>
 

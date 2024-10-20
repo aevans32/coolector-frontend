@@ -52,12 +52,11 @@ export class SignInComponent {
 
   errorSignal = signal(''); // Signal for throwing a Sign In error
 
-  // TODO: see if the routes can be injected
-  // private router = inject(routes);
+  private router = inject(Router);
 
-  constructor (
-    private router: Router
-  ) {}
+  // constructor (
+  //   private router: Router
+  // ) {}
 
   /**
    * This is where the form's elemements (email and pw)
@@ -207,6 +206,7 @@ export class SignInComponent {
         {
           // Log success response
           console.log('Login successful:', resData);
+          this.router.navigate(['/main-view']);
         },
         error: (err) => 
         {
