@@ -147,25 +147,46 @@ export class SignInComponent {
    */
   ngOnInit() {
 
+    console.log(`
+  ____            _           _             _ 
+ / ___|___   ___ | | ___  ___| |_ ___  _ __| |
+| |   / _ \\ / _ \\| |/ _ \\/ __| __/ _ \\| '__| |
+| |__| (_) | (_) | |  __/ (__| || (_) | |  |_|
+ \\____\\___/ \\___/|_|\\___|\\___|\\__\\___/|_|  (_)
+         `);
+
+    console.log(`
+      
+__        __   _                            _        
+\\ \\      / /__| | ___ ___  _ __ ___   ___  | |_ ___  
+ \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ \` _ \\ / _ \\ | __/ _ \\ 
+  \\ V  V /  __/ | (_| (_) | | | | | |  __/ | || (_) |
+  _\\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___|  \\__\\___/ 
+ / ___|___   ___ | | ___  ___| |_ ___  _ __| |       
+| |   / _ \\ / _ \\| |/ _ \\/ __| __/ _ \\| '__| |       
+| |__| (_) | (_) | |  __/ (__| || (_) | |  |_|       
+ \\____\\___/ \\___/|_|\\___|\\___|\\__\\___/|_|  (_)       
+
+      `);
     
       // TODO: replace this getAll method for faster tests to "wake up" the backend and database.
       // Make GET request to the .NET backend API
-      const subscription1 = this.httpClient.get('https://localhost:7096/api/user/getAll')
-        .subscribe({
-          next: (resData) => {
-            // Log the response to the console
-            console.log(resData);
-          },
-          error: (err) => {
-            // Handle any errors
-            console.error('Error fetching user data:', err);
-          }
-        });
+      // const subscription1 = this.httpClient.get('https://localhost:7096/api/user/getAll')
+      //   .subscribe({
+      //     next: (resData) => {
+      //       // Log the response to the console
+      //       console.log(resData);
+      //     },
+      //     error: (err) => {
+      //       // Handle any errors
+      //       console.error('Error fetching user data:', err);
+      //     }
+      //   });
   
-      // Unsubscribe when the component is destroyed
-      this.destroyRef.onDestroy(() => {
-        subscription1.unsubscribe();
-      });
+      // // Unsubscribe when the component is destroyed
+      // this.destroyRef.onDestroy(() => {
+      //   subscription1.unsubscribe();
+      // });
 
 
     const subscription = this.reactiveForm.valueChanges.
