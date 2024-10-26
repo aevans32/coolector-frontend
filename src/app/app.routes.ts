@@ -11,8 +11,8 @@ import { BankSimulatorComponent } from './bank-simulator/bank-simulator.componen
 const canActivateMainView = () => inject(AuthService).getToken();
 
 export const routes: Routes = [
-    // { path: '', redirectTo: 'sign-in', pathMatch: 'full' }, // Redirect to the sign-in page by default
-    { path: '', redirectTo: 'app-bank-simulator', pathMatch: 'full' }, // Redirect to the sign-in page by default
+    { path: '', redirectTo: 'sign-in', pathMatch: 'full' }, // Redirect to the sign-in page by default
+    // { path: '', redirectTo: 'app-bank-simulator', pathMatch: 'full' }, // Redirect to the sign-in page by default
     { 
         path: 'sign-in',                        // Route to the sign-in component
         component: SignInComponent 

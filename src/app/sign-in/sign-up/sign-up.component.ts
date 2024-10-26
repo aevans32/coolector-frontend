@@ -116,7 +116,7 @@ export class SignUpComponent {
 
     console.log('Form submitted and user added.');
 
-    // this.router.navigate(['sign-in']);
+    this.router.navigate(['sign-in']);
 
   }
 
