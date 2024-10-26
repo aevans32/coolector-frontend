@@ -147,20 +147,21 @@ export class SignInComponent {
    */
   ngOnInit() {
 
+    console.log('Welcome to Coolector!');
 
-    console.log(`
+//     console.log(`
       
-__        __   _                            _        
-\\ \\      / /__| | ___ ___  _ __ ___   ___  | |_ ___  
- \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ \` _ \\ / _ \\ | __/ _ \\ 
-  \\ V  V /  __/ | (_| (_) | | | | | |  __/ | || (_) |
-  _\\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___|  \\__\\___/ 
- / ___|___   ___ | | ___  ___| |_ ___  _ __| |       
-| |   / _ \\ / _ \\| |/ _ \\/ __| __/ _ \\| '__| |       
-| |__| (_) | (_) | |  __/ (__| || (_) | |  |_|       
- \\____\\___/ \\___/|_|\\___|\\___|\\__\\___/|_|  (_)       
+// __        __   _                            _        
+// \\ \\      / /__| | ___ ___  _ __ ___   ___  | |_ ___  
+//  \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ \` _ \\ / _ \\ | __/ _ \\ 
+//   \\ V  V /  __/ | (_| (_) | | | | | |  __/ | || (_) |
+//   _\\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___|  \\__\\___/ 
+//  / ___|___   ___ | | ___  ___| |_ ___  _ __| |       
+// | |   / _ \\ / _ \\| |/ _ \\/ __| __/ _ \\| '__| |       
+// | |__| (_) | (_) | |  __/ (__| || (_) | |  |_|       
+//  \\____\\___/ \\___/|_|\\___|\\___|\\__\\___/|_|  (_)       
 
-      `);
+//       `);
     
       // TODO: replace this getAll method for faster tests to "wake up" the backend and database.
       // Make GET request to the .NET backend API
@@ -181,6 +182,9 @@ __        __   _                            _
       //   subscription1.unsubscribe();
       // });
 
+    
+      // TODO: lets make the test call
+      // const testSubscription = this.httpClient.get()
 
     const subscription = this.reactiveForm.valueChanges.
     pipe(debounceTime(500)).
