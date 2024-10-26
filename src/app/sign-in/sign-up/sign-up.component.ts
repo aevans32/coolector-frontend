@@ -116,12 +116,10 @@ export class SignUpComponent {
 
     console.log('Form submitted and user added.');
 
-    this.router.navigate(['sign-in']);
+    // TODO: ADD THE CALL TO DISPLAY TEH SUCCESS MESSAGE HERE AFTER THE USER IS CREATED
+
 
   }
-
-
-
 
   
 
