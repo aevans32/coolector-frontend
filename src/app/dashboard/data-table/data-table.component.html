@@ -5,7 +5,7 @@
           <th scope="col">
             <div class="checkbox"> 
               <label>
-                <input type="checkbox" value="selected-debt">
+                <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()">
               </label>
             </div>
           </th>
@@ -25,7 +25,8 @@
           <td>
             <div class="checkbox mb-1"> 
               <label>
-                <input type="checkbox" value="selected-debt">
+                <!-- Bind each row checkbox to its own selected state -->
+                <input type="checkbox" [(ngModel)]="row.selected" (change)="updateSelectAllState()">
               </label>
             </div>
           </td>
@@ -36,7 +37,9 @@
           <td>{{ row.issueDate }}</td>
           <td>{{ row.expDate }}</td>
           <td>{{ row.payDate }}</td>
-          <td>{{ row.moreActions }}</td>
+          <td>
+            <button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-three-dots"></i></button>
+          </td>
         </tr>
         <!-- Display this row if there is no data -->
         <tr *ngIf="tableData().length === 0">

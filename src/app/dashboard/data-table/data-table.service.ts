@@ -47,7 +47,8 @@ export class DataTableService {
             issueDate: this.formatDate(item.issueDate),     // Format the date as needed
             expDate: this.formatDate(item.expDate),         // Format the date as needed
             payDate: '-',                                   // Default value for payDate
-            moreActions: '-'                                // Default value for moreActions
+            moreActions: '-',                                // Default value for moreActions
+            selected: false
         }));
       }),
       catchError((error) =>

@@ -7,4 +7,5 @@ export interface dataRow {
     expDate: string;
     payDate: string;
     moreActions: string;
+    selected: boolean;
 }
