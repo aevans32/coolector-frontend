@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DashboardComponent } from "../dashboard/dashboard.component";
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,5 +10,11 @@ import { DashboardComponent } from "../dashboard/dashboard.component";
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
+
+  // private router = inject(RouterLink);
+
+  bankOfAmericaAccess() {
+
+  }
 
 }

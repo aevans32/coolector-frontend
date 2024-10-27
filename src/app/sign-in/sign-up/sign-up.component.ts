@@ -100,7 +100,7 @@ export class SignUpComponent {
         next: () =>
         {
           console.log('New user created.');
-          // TODO: navigate back to signin
+          this.router.navigate(['sign-in']);
         },
         error: (err) =>
         {
