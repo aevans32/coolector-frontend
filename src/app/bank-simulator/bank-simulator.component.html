@@ -1,7 +1,8 @@
-<div class="BoA">
+<div class="bankPage">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-        <h2 class="BoA Title">Bank of America Simulator</h2>
+        <h2 class="BoA Title text-center">Bank Simulator</h2>
+        <p class="text-center">Lookup your debt using your client ID 🔎</p>
 
         <!-- Input field for customer ID, otherwise called the paying customer -->
         <div class="customerID">
@@ -9,12 +10,24 @@
             <input id="customerID" name="customerID" formControlName="customerID" />
         </div>
 
+        <p class="lookupButton">
+            <button class="button">Look Up</button>
+        </p>
+
         <div class="table-responsive small">
             <table class="table table-striped table-sm">
 
                 <!-- Table Headers -->
                 <thead>
                     <tr>
+                        <th scope="col">
+                            <div class="checkbox"> 
+                              <label>
+                                <input type="checkbox">
+                                <!-- <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()"> -->
+                              </label>
+                            </div>
+                        </th>
                         <th>Column 1</th>
                         <th>Column 2</th>
                         <th>Column 3</th>
@@ -24,14 +37,28 @@
                 <!-- Table's Body -->
                 <tbody>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <div class="checkbox mb-1"> 
+                              <label>
+                                <!-- Bind each row checkbox to its own selected state -->
+                                <input type="checkbox">
+                                <!-- <input type="checkbox" [(ngModel)]="row.selected" (change)="updateSelectAllState()"> -->
+                              </label>
+                            </div>
+                        </td>
+                        <td>Amount?</td>
+                        <td>Exp?</td>
+                        <td>what else?</td>
                     </tr>
                 </tbody>
 
             </table>
         </div>
         <!-- End of table div -->
+
+        <p class="payButton">
+            <button class="button">Pay Selected Debt</button>
+        </p>
 
     </form>
 </div>
