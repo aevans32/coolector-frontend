@@ -11,8 +11,6 @@ import { BaseChartDirective } from 'ng2-charts';
 })
 export class ChartComponent {
 
-  // im setting type over in the template
-  // public lineChartType: ChartType = 'line';
 
   // X axis labels
   public lineChartLabels: string[] = [
