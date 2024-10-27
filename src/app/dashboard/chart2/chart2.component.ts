@@ -12,9 +12,9 @@ import { BaseChartDirective } from 'ng2-charts';
 export class Chart2Component {
 
   public pieChartLabels: string[] = [
-    'Label1',
-    'Label2',
-    'Label3'
+    'Chase',
+    'Bank of America',
+    'TD'
   ];
 
   public pieChartDatasets: ChartDataset<'pie'>[] = [
