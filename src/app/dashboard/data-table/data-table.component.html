@@ -47,6 +47,24 @@
             <button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-three-dots"></i></button>
           </td>
         </tr>
+
+        <!-- New row for inline adding -->
+        <tr *ngIf="isAddingNewRow">
+          <td></td>
+          <td><input type="text" [(ngModel)]="newRow.client" placeholder="Client" required></td>
+          <td><input type="text" [(ngModel)]="newRow.status" placeholder="Status" required></td>
+          <td><input type="number" [(ngModel)]="newRow.amount" placeholder="Amount" required></td>
+          <td><input type="text" [(ngModel)]="newRow.bank" placeholder="Bank"></td>
+          <td><input type="date" [(ngModel)]="newRow.issueDate"></td>
+          <td><input type="date" [(ngModel)]="newRow.expDate"></td>
+          <td><input type="date" [(ngModel)]="newRow.payDate"></td>
+          <td>
+            <button type="button" class="btn btn-sm btn-outline-primary" (click)="saveNewRow()">Save</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary" (click)="cancelNewRow()">Cancel</button>
+          </td>
+        </tr>
+
+        
         <!-- Display this row if there is no data, this row only appears if the table's data's length is zero-->
         <tr *ngIf="tableData().length === 0">
           <td colspan="5">No info available</td>

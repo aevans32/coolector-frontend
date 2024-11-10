@@ -19,6 +19,9 @@ export class DataTableComponent {
 
   // Variable to track the state of the "select all" checkbox
   selectAll = false;
+  isAddingNewRow = false; // Track if we are adding a new row
+
+  newRow: dataRow = { client: '', status: '', amount: '', bank: '', issueDate: '', expDate: '', payDate: '', moreActions: '', selected: false };
   
   tableData = computed<dataRow[]>(() => this.tableDataService.allData());
   
@@ -38,7 +41,21 @@ export class DataTableComponent {
    * Creates a new debt instance by adding a new row to the table.
    */
   onPressingNewButton() {
-    console.log("New Button pressed");
+    this.isAddingNewRow = true; // Enable adding mode
+    this.newRow = { client: '', status: '', amount: '', bank: '', issueDate: '', expDate: '', payDate: '', moreActions: '', selected: false }; // Reset new row data
+  }
+
+  saveNewRow() {
+    if (this.newRow.client && this.newRow.status && this.newRow.amount) { // Check mandatory fields
+      this.tableDataService.addRow(this.newRow); // Add row through service
+      this.isAddingNewRow = false; // Exit adding mode
+    } else {
+      console.log('Please fill in the required fields.');
+    }
+  }
+
+  cancelNewRow() {
+    this.isAddingNewRow = false; // Exit adding mode without saving
   }
 
   /**

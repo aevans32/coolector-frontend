@@ -24,6 +24,11 @@ export class DataTableService {
      this.fetchTableData();
   }
 
+  addRow(newRow: dataRow) {
+    const updatedData = [...this.tableData(), newRow];
+    this.tableData.set(updatedData); // Update the signal with the new row
+  }
+
   fetchTableData()
   {
     const subscription = this.httpClient.get<any[]>(`${this.baseURL}/dashboard`)
