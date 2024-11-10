@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../user/user.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../auth.service';
 
@@ -25,13 +25,16 @@ function equalValues(controlName1: string, controlName2: string) {
   }
 }
 
+// function equalValues(control: AbstractControl) {
+//   const password = control.get('password')?.value;
+// }
 
 
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
 })
@@ -48,12 +51,14 @@ export class SignUpComponent {
       // EMAIL VALIDATORS
       validators: [Validators.email, Validators.required]
     }),
+
     // INITIALIZATION OF THE PASSWORDS GROUP
     passwords: new FormGroup({
       // THE FIRST PASSWORD
       password: new FormControl('', {
         validators: [Validators.required, Validators.minLength(6)]
       }),
+
       // THE SECOND PASSWORD TO CONFIRM
       confirmPassword: new FormControl('', {
         validators: [Validators.required, Validators.minLength(6)]
@@ -62,6 +67,8 @@ export class SignUpComponent {
       // VALIDATORS FOR THE PASSWORDS GROUP, SO THEY MATCH
       validators: [equalValues('password', 'confirmPassword')]
     }),
+
+
     // INITIALIZTION OF FIRST AND LAST NAME ALONG WITH VALIDATORS
     firstName: new FormControl('', {validators: [Validators.required]}),
     lastName: new FormControl('', {validators: [Validators.required]}),
@@ -80,6 +87,46 @@ export class SignUpComponent {
   });
 
 
+  get emailIsInvalid() {
+    return (
+      this.form.controls.email.touched &&
+      this.form.controls.email.dirty &&
+      this.form.controls.email.invalid
+    )
+  }
+
+  get firstPasswordIsInvalid() {
+    const passwordControl = this.form.get('passwords.confirmPassword');
+    return (
+      passwordControl?.touched &&
+      passwordControl?.dirty &&
+      passwordControl?.invalid
+    );
+  }
+
+  get notMatching() {
+    return (
+      this.form.controls.passwords.touched &&
+      this.form.controls.passwords.dirty &&
+      this.form.controls.passwords.invalid
+    )
+  }
+
+  
+  get notMatchingMessage() {
+    const pwGroupControl = this.form.controls.passwords.errors;
+
+    if (pwGroupControl) {
+      if (pwGroupControl['valuesNotEqual']) {
+        console.log("Passwords do not match.");
+        return 'Passwords do not match.';
+      }
+    }
+
+    return;
+  }
+  
+  
 
   onSubmit() {
 
@@ -116,7 +163,7 @@ export class SignUpComponent {
 
     console.log('Form submitted and user added.');
 
-    // TODO: ADD THE CALL TO DISPLAY TEH SUCCESS MESSAGE HERE AFTER THE USER IS CREATED
+    // TODO: ADD THE CALL TO DISPLAY THE SUCCESS MESSAGE HERE AFTER THE USER IS CREATED
 
 
   }

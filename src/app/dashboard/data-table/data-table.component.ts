@@ -32,6 +32,23 @@ export class DataTableComponent {
     const allSelected = this.tableData().every(row => row.selected);
     this.selectAll = allSelected;
   }
+
+  /**
+   * Method to handle the event of pressing the New button.
+   * Creates a new debt instance by adding a new row to the table.
+   */
+  onPressingNewButton() {
+    console.log("New Button pressed");
+  }
+
+  /**
+   * Method to handle the event of pressing the Delete button.
+   * Deletes the selected debts from the table.
+   * TODO: this will need an Are You Sure pop up.
+   */
+  onPressingDeleteButton() {
+    console.log("Delete Button pressed");
+  }
   
 
 }

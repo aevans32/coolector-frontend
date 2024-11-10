@@ -1,8 +1,8 @@
 <div class="table-responsive small">
   <div class="btn-group me-2">
-    <button type="button" class="btn btn-sm btn-outline-secondary">New</button>
-    <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
-</div>
+    <button type="button" class="btn btn-sm btn-outline-secondary" (click)="onPressingNewButton()">New</button>
+    <button type="button" class="btn btn-sm btn-outline-secondary" (click)="onPressingDeleteButton()">Delete</button>
+  </div>
     <table class="table table-striped table-sm">
       <thead>
         <tr>
@@ -23,6 +23,7 @@
           <th scope="col">More Actions</th>
         </tr>
       </thead>
+      <!-- Body of the Table -->
       <tbody>
         <!-- Use *ngFor to loop through the rows in tableData -->
         <tr *ngFor="let row of tableData()">
@@ -46,7 +47,7 @@
             <button type="button" class="btn btn-sm btn-outline-secondary"><i class="bi bi-three-dots"></i></button>
           </td>
         </tr>
-        <!-- Display this row if there is no data -->
+        <!-- Display this row if there is no data, this row only appears if the table's data's length is zero-->
         <tr *ngIf="tableData().length === 0">
           <td colspan="5">No info available</td>
         </tr>

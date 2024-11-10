@@ -4,7 +4,7 @@
     <div class="top-space"></div>
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <h2 class="text-center">Welcome on board!</h2>
-    <p class="text-center">We just need a little bit of data from you to get you started 🚀</p>
+    <p class="text-center">Please enter your new user info to get you started 🚀</p>
   
     <div class="control">
       <label for="email">Email</label>
@@ -97,12 +97,22 @@
   
     <p class="form-actions">
       <!--type reset handles the reset already, but since we have a method we use type button-->
-      <!-- <button type="button" class="button button-flat" (click)="onReset()">Reset</button> -->
+      <button type="button" class="button button-flat" routerLink="/sign-in">Cancel</button>
       <button type="submit" class="button">Sign up</button>
     </p>
   
-    @if(form.touched && form.invalid) {
+    <!-- @if(form.touched && form.invalid) {
       <p class="control-error">Invalid form data, please check your input data.</p>
+    } -->
+    @if(emailIsInvalid) {
+      <p class="control-error">Invalid email.</p>
+    }
+    @else if (firstPasswordIsInvalid) {
+      <p class="control-error">Invalid password.</p>
+    }
+
+    @if (notMatching) {
+      <p class="control-error">Passwords do not match.</p>
     }
     
   </form>
