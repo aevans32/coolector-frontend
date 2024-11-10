@@ -21,7 +21,7 @@ export class DataTableComponent {
   selectAll = false;
   isAddingNewRow = false; // Track if we are adding a new row
 
-  newRow: dataRow = { client: '', status: '', amount: '', bank: '', issueDate: '', expDate: '', payDate: '', moreActions: '', selected: false };
+  newRow: dataRow = { client: '', status: false, amount: '', bank: '', issueDate: '', expDate: '', payDate: '', moreActions: '', selected: false };
   
   tableData = computed<dataRow[]>(() => this.tableDataService.allData());
   
@@ -42,11 +42,11 @@ export class DataTableComponent {
    */
   onPressingNewButton() {
     this.isAddingNewRow = true; // Enable adding mode
-    this.newRow = { client: '', status: '', amount: '', bank: '', issueDate: '', expDate: '', payDate: '', moreActions: '', selected: false }; // Reset new row data
+    this.newRow = { client: '', status: false, amount: '', bank: '-', issueDate: '', expDate: '', payDate: '-', moreActions: '', selected: false }; // Reset new row data
   }
 
   saveNewRow() {
-    if (this.newRow.client && this.newRow.status && this.newRow.amount) { // Check mandatory fields
+    if (this.newRow.client  && this.newRow.amount && this.newRow.issueDate && this.newRow.expDate) { // Check mandatory fields
       this.tableDataService.addRow(this.newRow); // Add row through service
       this.isAddingNewRow = false; // Exit adding mode
     } else {
@@ -64,8 +64,12 @@ export class DataTableComponent {
    * TODO: this will need an Are You Sure pop up.
    */
   onPressingDeleteButton() {
-    console.log("Delete Button pressed");
+    const updatedData = this.tableData().filter(row => !row.selected);
+    this.tableDataService.updateTableData(updatedData);
+    this.selectAll = false;
   }
+  
+  
   
 
 }

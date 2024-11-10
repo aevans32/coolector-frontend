@@ -25,8 +25,14 @@ export class DataTableService {
   }
 
   addRow(newRow: dataRow) {
+    newRow.amount = this.formatAmount(Number(newRow.amount)); // Convert and format amount as currency
     const updatedData = [...this.tableData(), newRow];
     this.tableData.set(updatedData); // Update the signal with the new row
+  }
+  
+
+  updateTableData(newData: dataRow[]) {
+    this.tableData.set(newData); // Update the tableData signal with new data
   }
 
   fetchTableData()
@@ -36,14 +42,14 @@ export class DataTableService {
       map(response => {
         return response.map(item => ({
           client: item.clientName,                          // Mapping API's clientName to client
-            status: this.capitalizeFirstLetter(item.status),// Directly mapping status
-            amount: `$ ${item.amount.toFixed(2)}`,          // Formatting the amount with a currency symbol and two decimal places
-            bank: '-',                                      // Default value for bank
-            issueDate: this.formatDate(item.issueDate),     // Format the date as needed
-            expDate: this.formatDate(item.expDate),         // Format the date as needed
-            payDate: '-',                                   // Default value for payDate
-            moreActions: '-',                                // Default value for moreActions
-            selected: false
+          status: item.status.toLowerCase() === 'paid',     // Map "paid" to true and "pending" to false
+          amount: `$ ${item.amount.toFixed(2)}`,            // Formatting the amount with a currency symbol and two decimal places
+          bank: '-',                                        // Default value for bank
+          issueDate: this.formatDate(item.issueDate),       // Format the date as needed
+          expDate: this.formatDate(item.expDate),           // Format the date as needed
+          payDate: '-',                                     // Default value for payDate
+          moreActions: '-',                                 // Default value for moreActions
+          selected: false
         }));
       }),
       catchError((error) =>
@@ -75,9 +81,15 @@ export class DataTableService {
   }
 
   //  Capitalizes the Status since it arrives from the API all lowercase
+  // DEPRECATED
   private capitalizeFirstLetter(value: string): string {
     if (!value) return value;
     return value.charAt(0).toUpperCase() + value.slice(1).toLowerCase();
   }
+
+  private formatAmount(amount: number): string {
+    return `$ ${amount.toFixed(2)}`; // Formats amount with a dollar sign and two decimal places
+  }
+  
   
 }
