@@ -15,6 +15,7 @@ export class DataTableComponent {
   
   private tableDataService = inject(DataTableService);
 
+
   @Input() dataId!: string;
 
   // Variable to track the state of the "select all" checkbox
@@ -23,6 +24,8 @@ export class DataTableComponent {
 
   newRow: dataRow = { client: '', status: false, amount: '', bank: '', issueDate: '', expDate: '', payDate: '', moreActions: '', selected: false };
   
+  // this signal is taken from the html tempate to update it.
+  // check the ngFor loop at around line 53
   tableData = computed<dataRow[]>(() => this.tableDataService.allData());
   
   // Method to toggle all checkboxes when the "select all" checkbox is clicked
@@ -64,10 +67,29 @@ export class DataTableComponent {
    * TODO: this will need an Are You Sure pop up.
    */
   onPressingDeleteButton() {
-    const updatedData = this.tableData().filter(row => !row.selected);
-    this.tableDataService.updateTableData(updatedData);
-    this.selectAll = false;
+    const selectedCodes = this.tableData()
+      .filter(row => row.selected && row.code != null)
+      .map(row => row.code as number);
+  
+    // Subscribe to the delete request
+    const subscription = this.tableDataService.deleteRows(selectedCodes).subscribe({
+      next: () => {
+        // Filter out the deleted rows from local table data
+        const updatedData = this.tableData().filter(row => !selectedCodes.includes(row.code as number));
+        this.tableDataService.updateTableData(updatedData);
+        this.selectAll = false; // Reset the select-all checkbox
+      },
+      error: (error) => {
+        console.error('Failed to delete selected rows:', error);
+      }
+    });
+  
+    // Unsubscribe on destroy to prevent memory leaks
+    this.tableDataService.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
   }
+  
   
   
   
