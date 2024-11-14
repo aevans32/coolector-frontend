@@ -50,6 +50,7 @@ export class DataTableComponent {
 
   saveNewRow() {
     if (this.newRow.client  && this.newRow.amount && this.newRow.issueDate && this.newRow.expDate) { // Check mandatory fields
+      console.log(this.newRow);
       this.tableDataService.addRow(this.newRow); // Add row through service
       this.isAddingNewRow = false; // Exit adding mode
     } else {
