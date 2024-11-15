@@ -27,7 +27,7 @@ export const routes: Routes = [
         component: SignUpComponent
     },
     {
-        path: 'app-bank-simulator',
+        path: 'bank-simulator/:bankName',   // Route to the bank simulator with bank name parameter
         component: BankSimulatorComponent
     }
   ];

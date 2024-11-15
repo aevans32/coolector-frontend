@@ -3,7 +3,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-bank-simulator',
+  selector: 'bank-simulator',
   standalone: true,
   imports: [RouterLink, ReactiveFormsModule],
   templateUrl: './bank-simulator.component.html',
