@@ -28,15 +28,15 @@
                               </label>
                             </div>
                         </th>
-                        <th>Column 1</th>
-                        <th>Column 2</th>
-                        <th>Column 3</th>
+                        <th>Client's Name</th>
+                        <th>Amount</th>
+                        <th>Exp Date</th>
                     </tr>
                 </thead>
 
                 <!-- Table's Body -->
                 <tbody>
-                    <tr>
+                    <tr *ngFor="let row of tableData()">
                         <td>
                             <div class="checkbox mb-1"> 
                               <label>
@@ -46,9 +46,15 @@
                               </label>
                             </div>
                         </td>
-                        <td>Amount?</td>
-                        <td>Exp?</td>
-                        <td>what else?</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    
+
+                    <!-- Display this row if there is no data, this row only appears if the table's data's length is zero-->
+                    <tr *ngIf="tableData().length === 0">
+                        <td colspan="4">No info available</td>
                     </tr>
                 </tbody>
 

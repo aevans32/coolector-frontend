@@ -11,14 +11,11 @@ import { BankSimulatorComponent } from "../bank-simulator/bank-simulator.compone
   imports: [
     HeaderComponent, 
     SidebarComponent, 
-    DashboardComponent, 
-    RouterLink, 
-    BankSimulatorComponent, 
     RouterOutlet],
   templateUrl: './main-view.component.html',
   styleUrl: './main-view.component.css'
 })
 export class MainViewComponent {
 
-  // private router = inject(RouterLink);
+  
 }
