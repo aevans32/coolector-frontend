@@ -49,14 +49,32 @@ export class DataTableComponent {
   }
 
   saveNewRow() {
-    if (this.newRow.client  && this.newRow.amount && this.newRow.issueDate && this.newRow.expDate) { // Check mandatory fields
-      console.log(this.newRow);
-      this.tableDataService.addRow(this.newRow); // Add row through service
-      this.isAddingNewRow = false; // Exit adding mode
+    if (this.newRow.client && this.newRow.amount && this.newRow.issueDate && this.newRow.expDate) {
+      // Construct a payload with only the required fields
+      const payload = {
+        clientName: this.newRow.client,
+        status: this.newRow.status ? 'paid' : 'pending', // Convert boolean to expected string format
+        amount: Number(this.newRow.amount), // Ensure amount is a number
+        issueDate: new Date(this.newRow.issueDate).toISOString(), // Format date as ISO string
+        expDate: new Date(this.newRow.expDate).toISOString() // Format date as ISO string
+      };
+  
+      console.log('Payload being sent to backend:', payload); // Log payload for debugging
+      this.tableDataService.addDebt(payload).subscribe({
+        next: (response) => {
+          console.log('Debt added successfully', response);
+          this.isAddingNewRow = false; // Exit adding mode
+          this.tableDataService.fetchTableData(); // Refresh the table data after adding
+        },
+        error: (error) => {
+          console.error('Error adding new debt:', error);
+        }
+      });
     } else {
       console.log('Please fill in the required fields.');
     }
   }
+  
 
   cancelNewRow() {
     this.isAddingNewRow = false; // Exit adding mode without saving
@@ -68,9 +86,18 @@ export class DataTableComponent {
    * TODO: this will need an Are You Sure pop up.
    */
   onPressingDeleteButton() {
+
+    console.log("Current tableData:", this.tableData().map(row => ({
+      code: row.code,
+      client: row.client,
+      selected: row.selected
+    })));
+    
     const selectedCodes = this.tableData()
       .filter(row => row.selected && row.code != null)
       .map(row => row.code as number);
+
+      console.log("Selected Codes:", selectedCodes);
   
     // Subscribe to the delete request
     const subscription = this.tableDataService.deleteRows(selectedCodes).subscribe({

@@ -31,8 +31,13 @@ export class DataTableService {
    * @param newDebt 
    * @returns 
    */
-  addDebt(newDebt: dataRow) {
-    return this.httpClient.post<dataRow>(`${this.baseURL}/add`, newDebt).pipe(
+  addDebt(payload: { 
+    clientName: string; 
+    status: string; 
+    amount: number; 
+    issueDate: string; 
+    expDate: string }) {
+    return this.httpClient.post(`${this.baseURL}/add`, payload).pipe(
       catchError(error => {
         console.error('Error adding new debt:', error);
         return throwError(() => new Error('Error adding new debt'));
@@ -40,29 +45,43 @@ export class DataTableService {
     );
   }
   
+  
 
   /**
    * Adds a Row to the table.
    * @param newRow 
    */
-  addRow(newRow: dataRow) {
-    newRow.amount = this.formatAmount(Number(newRow.amount)); // Format the amount as currency
-  
-    const subscription = this.addDebt(newRow).subscribe({
-      next: (savedDebt) => {
-        const updatedData = [...this.tableData(), savedDebt];
-        this.tableData.set(updatedData); // Update the table data with the new row
-      },
-      error: (error) => {
-        console.error('Failed to add new debt row:', error);
-      }
-    });
-  
-    // Unsubscribe from the subscription on destroy
-    this.destroyRef.onDestroy(() => {
-      subscription.unsubscribe();
-    });
-  }
+  // addRow(newRow: dataRow) {
+  //   // Construct payload for backend by mapping `client` to `clientName`
+  //   const payload = {
+  //     clientName: newRow.client,
+  //     status: newRow.status ? 'paid' : 'pending',
+  //     amount: Number(newRow.amount.replace(/[^0-9.-]+/g, "")), // Convert formatted string to number
+  //     issueDate: new Date(newRow.issueDate).toISOString(),
+  //     expDate: new Date(newRow.expDate).toISOString()
+  //   };
+
+  //   const subscription = this.addDebt(payload).subscribe({
+  //     next: (savedDebt) => {
+  //       // Combine savedDebt data with local `newRow` data for complete `dataRow` structure
+  //       const newTableRow: dataRow = {
+  //         ...newRow,
+  //         code: savedDebt.code || undefined // Use code if backend returns it
+  //       };
+
+  //       const updatedData = [...this.tableData(), newTableRow];
+  //       this.tableData.set(updatedData); // Update the table data with the new row
+  //     },
+  //     error: (error) => {
+  //       console.error('Failed to add new debt row:', error);
+  //     }
+  //   });
+
+  //   // Unsubscribe on destroy to prevent memory leaks
+  //   this.destroyRef.onDestroy(() => {
+  //     subscription.unsubscribe();
+  //   });
+  // }
   
   
   /**
@@ -83,6 +102,7 @@ export class DataTableService {
     .pipe(
       map(response => {
         return response.map(item => ({
+          code: item.code,                              // Include code from the response
           client: item.clientName,                          // Mapping API's clientName to client
           status: item.status.toLowerCase() === 'paid',     // Map "paid" to true and "pending" to false
           amount: `$ ${item.amount.toFixed(2)}`,            // Formatting the amount with a currency symbol and two decimal places
@@ -103,6 +123,7 @@ export class DataTableService {
       next: (data) => 
       {
         this.tableData.set(data);       // Update the tableData signal with the transformed data
+        console.log("Fetched tableData with code values:", this.tableData()); // Log to verify code presence
       }
     }
     );
@@ -129,6 +150,8 @@ export class DataTableService {
    * @returns 
    */
   deleteRows(codes: number[]) {
+
+    console.log("Codes received by Service:", codes);
     // Return the observable instead of subscribing here
     return this.httpClient.request('delete', `${this.baseURL}/delete`, {
       body: { codes }
