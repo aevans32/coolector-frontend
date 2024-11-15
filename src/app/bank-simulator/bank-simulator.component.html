@@ -1,7 +1,7 @@
 <div class="bankPage">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-        <h2 class="BoA Title text-center">Bank Simulator</h2>
+        <h2 class="BoA Title text-center">{{ bankName }} Simulator</h2>
         <p class="text-center">Lookup your debt using your client ID 🔎</p>
 
         <!-- Input field for customer ID, otherwise called the paying customer -->

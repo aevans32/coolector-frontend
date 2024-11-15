@@ -17,17 +17,27 @@ export const routes: Routes = [
         path: 'sign-in',                        // Route to the sign-in component
         component: SignInComponent 
     },
-    {
-        path: 'main-view',                        
-        component: MainViewComponent,
-        canActivate: [canActivateMainView] //protect the route
-    }, 
+    // {
+    //     path: 'main-view',                        
+    //     component: MainViewComponent,
+    //     canActivate: [canActivateMainView] //protect the route
+    // }, 
     {
         path: 'sign-up',
         component: SignUpComponent
     },
+    // {
+    //     path: 'bank-simulator/:bankName',   // Route to the bank simulator with bank name parameter
+    //     component: BankSimulatorComponent
+    // }
     {
-        path: 'bank-simulator/:bankName',   // Route to the bank simulator with bank name parameter
-        component: BankSimulatorComponent
-    }
+        path: 'main-view',
+        component: MainViewComponent,
+        canActivate: [canActivateMainView],
+        children: [
+          { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Default route within main-view
+          { path: 'dashboard', component: DashboardComponent },
+          { path: 'bank-simulator/:bankName', component: BankSimulatorComponent } // Route for bank simulator with dynamic bank name
+        ]
+      }
   ];
