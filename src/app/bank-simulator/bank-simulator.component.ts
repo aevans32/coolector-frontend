@@ -8,61 +8,16 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'bank-simulator',
   standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, CommonModule],
+  imports: [RouterLink, CommonModule, FormsModule],
   templateUrl: './bank-simulator.component.html',
   styleUrl: './bank-simulator.component.css'
 })
 export class BankSimulatorComponent implements OnInit{
 
-  private bankDataService = inject(BankSimulatorService);
-
-
-  // Functionality for checkboxes and the select all checkbox
-  selectAllControl = new FormControl(false);
-
-  rowControls: FormArray = new FormArray([]);
-  
-  toggleSelectAll() {
-    const isChecked = this.selectAllControl.value;
-    this.rowControls.controls.forEach(control => control.setValue(isChecked));
-  }
-
-  updateSelectAllState() {
-    const allSelected = this.rowControls.controls.every(control => control.value === true);
-    this.selectAllControl.setValue(allSelected, { emitEvent: false });
-  }
-  // -----------------------end select all checkboxes--------------
-
-
-  tableData = computed<BankDebtRow[]>(() => this.bankDataService.allData());
-
-  form = new FormGroup(
-    {
-      customerName: new FormControl('', {
-        validators: [Validators.required]
-      })
-    });
-
-    get customerNameIsInvalid () {
-      return (
-        this.form.controls.customerName.touched &&
-        this.form.controls.customerName.dirty &&
-        this.form.controls.customerName.invalid
-      )
-    }
-
-    get customerNameErrors () {
-      const errors = this.form.controls.customerName.errors;
-
-      if (errors) {
-        if (errors['required']) {
-          return 'Customer\'s Name cannot be empty.'
-        }
-      }
-      return null;
-    }
+  customerName = '';
 
   bankName: string | null = null;
+  
 
   constructor(private route: ActivatedRoute){}
 
@@ -72,21 +27,36 @@ export class BankSimulatorComponent implements OnInit{
 
     // Log or use this variable to differentiate functionality
     console.log('Bank Name:', this.bankName);
+
+    this.bankDataService.updateTableData([]);
   }
 
-  
-  onSubmit() {
+  private bankDataService = inject(BankSimulatorService);
 
-    const customerNameControl = this.form.get('customerName');
 
-    // Get the Customer Name from the form
-    const customerName = this.form.get('customerName')?.value;
+  // Functionality for checkboxes and the select all checkbox
 
-    if (customerName) {
-      console.log('Looking up debts for customer:', customerName);
+  selectAll = false;
+
+  tableData = computed<BankDebtRow[]>(() => this.bankDataService.allData());
+
+  toggleSelectAll() {
+    this.tableData().forEach(row => row.selected = this.selectAll);
+  }
+
+  updateSelectAllState() {
+    const allSelected = this.tableData().every(row => row.selected);
+    this.selectAll = allSelected;
+  }
+
+
+  onLookUp() {  
+
+    if (this.customerName.trim()) {
+      console.log('Looking up debts for customer:', this.customerName);
 
       // Call the service method and handle the response
-      const subscription = this.bankDataService.lookUpDebtsByCustomerName(customerName)
+      const subscription = this.bankDataService.lookUpDebtsByCustomerName(this.customerName)
       .subscribe({
         next: (data) =>{
           console.log('Debts fetched successfully:', data);
@@ -104,11 +74,66 @@ export class BankSimulatorComponent implements OnInit{
       });
     }
     else {
-      
-      customerNameControl?.markAsTouched();
-      customerNameControl?.setErrors({ required: true });
-
       console.log('Customer name is required.');
     }
   }
+
+  // selectAllControl = new FormControl(false);
+  // rowControls: FormArray<FormControl<boolean>> = new FormArray<FormControl<boolean>>([]);
+  // toggleSelectAll() {
+  //   const isChecked = this.selectAllControl.value ?? false; // Handle null case
+  //   this.rowControls.controls.forEach(control => control.setValue(isChecked, { emitEvent: false }));
+  // }
+  // updateSelectAllState() {
+
+  //   const allSelected = this.rowControls.controls.every(control => control.value === true);
+  //   const noneSelected = this.rowControls.controls.every(control => control.value === false);
+  
+  //   if (allSelected) {
+  //     this.selectAllControl.setValue(true, { emitEvent: false }); // Check header checkbox
+  //   } else if (noneSelected) {
+  //     this.selectAllControl.setValue(false, { emitEvent: false }); // Uncheck header checkbox
+  //   } else {
+  //     this.selectAllControl.setValue(false, { emitEvent: false }); // Partially selected state
+  //   }
+  // }
+  
+  
+  // -----------------------end select all checkboxes--------------
+
+
+  
+
+  // form = new FormGroup(
+  //   {
+  //     customerName: new FormControl('', {
+  //       validators: [Validators.required]
+  //     }),
+  //     // selectAllControl: new FormControl(false),
+  //     // rowControls: new FormArray<FormControl<boolean>>([])
+  //   });
+
+    // get customerNameIsInvalid () {
+    //   return (
+    //     this.form.controls.customerName.touched &&
+    //     this.form.controls.customerName.dirty &&
+    //     this.form.controls.customerName.invalid
+    //   )
+    // }
+
+    // get customerNameErrors () {
+    //   const errors = this.form.controls.customerName.errors;
+
+    //   if (errors) {
+    //     if (errors['required']) {
+    //       return 'Customer\'s Name cannot be empty.'
+    //     }
+    //   }
+    //   return null;
+    // }
+
+  
+
+  
+  
 }

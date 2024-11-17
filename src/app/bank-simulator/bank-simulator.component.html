@@ -1,5 +1,5 @@
 <div class="bankPage">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()"> -->
 
         <h2 class="BoA Title text-center">{{ bankName }} Simulator</h2>
         <p class="text-center">Lookup your debt using your client ID 🔎</p>
@@ -7,15 +7,16 @@
         <!-- Input field for customer ID, otherwise called the paying customer -->
         <div class="customerName">
             <label for="customerName">Customer Name</label>
-            <input id="customerName" name="customerName" formControlName="customerName" />
-            <div class="signIn-error-message" style="width: 300px; height: 25px">
+            <input id="customerName" name="customerName" [(ngModel)]="customerName"/>
+            <!-- <input id="customerName" name="customerName" formControlName="customerName" /> -->
+            <!-- <div class="signIn-error-message" style="width: 300px; height: 25px">
                 @if (customerNameIsInvalid && customerNameErrors) {
                   <p class="control-error">{{ customerNameErrors }}</p>}
-              </div>
+            </div> -->
         </div>
 
         <p class="lookupButton">
-            <button class="button">Look Up</button>
+            <button class="button" (click)="onLookUp()">Look Up</button>
         </p>
 
         <div class="table-responsive small">
@@ -27,7 +28,9 @@
                         <th scope="col">
                             <div class="checkbox"> 
                               <label>
-                                <input type="checkbox" [formControl]="selectAllControl" (change)="toggleSelectAll()">
+                                <!-- <input type="checkbox"/> -->
+                                <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()">
+                                <!-- <input type="checkbox" [formControl]="selectAllControl" (change)="toggleSelectAll()"> -->
                               </label>
                             </div>
                         </th>
@@ -44,13 +47,15 @@
                             <div class="checkbox"> 
                               <label>
                                 <!-- Bind each row checkbox to its own selected state -->
-                                <input type="checkbox" [formControl]="rowControls[i]" (change)="updateSelectAllState()">
+                                <!-- <input type="checkbox"/> -->
+                                <input type="checkbox" [(ngModel)]="row.selected" (change)="updateSelectAllState()">
+                                <!-- <input type="checkbox" [formControl]="rowControls.at(i)" (change)="updateSelectAllState()"> -->
                               </label>
                             </div>
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ row.clientName }}</td>
+                        <td>{{ row.amount }}</td>
+                        <td>{{ row.expDate }}</td>
                     </tr>
                     
 
@@ -69,5 +74,5 @@
             <button class="button">Pay Selected Debt</button>
         </p>
 
-    </form>
+    <!-- </form> -->
 </div>
