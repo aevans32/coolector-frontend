@@ -49,7 +49,7 @@
         </tr>
 
 
-        <!-- Use *ngFor to loop through the rows in tableData -->
+        <!-- Use *ngFor to loop through the rows in tableData and print all rows' info-->
         <tr *ngFor="let row of tableData()">
           <td>
             <div class="checkbox mb-1"> 
@@ -79,6 +79,7 @@
         <tr *ngIf="tableData().length === 0">
           <td colspan="9">No info available</td>
         </tr>
+        
       </tbody>
     </table>
   </div>

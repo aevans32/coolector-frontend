@@ -1,5 +1,5 @@
-import { Component, computed, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, computed, inject, Input, OnInit } from '@angular/core';
+import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { BankDebtRow } from './bank-simulator.model';
 import { BankSimulatorService } from './bank-simulator.service';
@@ -15,6 +15,24 @@ import { CommonModule } from '@angular/common';
 export class BankSimulatorComponent implements OnInit{
 
   private bankDataService = inject(BankSimulatorService);
+
+
+  // Functionality for checkboxes and the select all checkbox
+  selectAllControl = new FormControl(false);
+
+  rowControls: FormArray = new FormArray([]);
+  
+  toggleSelectAll() {
+    const isChecked = this.selectAllControl.value;
+    this.rowControls.controls.forEach(control => control.setValue(isChecked));
+  }
+
+  updateSelectAllState() {
+    const allSelected = this.rowControls.controls.every(control => control.value === true);
+    this.selectAllControl.setValue(allSelected, { emitEvent: false });
+  }
+  // -----------------------end select all checkboxes--------------
+
 
   tableData = computed<BankDebtRow[]>(() => this.bankDataService.allData());
 

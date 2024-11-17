@@ -27,8 +27,7 @@
                         <th scope="col">
                             <div class="checkbox"> 
                               <label>
-                                <input type="checkbox">
-                                <!-- <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()"> -->
+                                <input type="checkbox" [formControl]="selectAllControl" (change)="toggleSelectAll()">
                               </label>
                             </div>
                         </th>
@@ -40,13 +39,12 @@
 
                 <!-- Table's Body -->
                 <tbody>
-                    <tr *ngFor="let row of tableData()">
+                    <tr *ngFor="let row of tableData(); let i = index">
                         <td>
-                            <div class="checkbox mb-1"> 
+                            <div class="checkbox"> 
                               <label>
                                 <!-- Bind each row checkbox to its own selected state -->
-                                <input type="checkbox">
-                                <!-- <input type="checkbox" [(ngModel)]="row.selected" (change)="updateSelectAllState()"> -->
+                                <input type="checkbox" [formControl]="rowControls[i]" (change)="updateSelectAllState()">
                               </label>
                             </div>
                         </td>
@@ -60,6 +58,7 @@
                     <tr *ngIf="tableData().length === 0">
                         <td colspan="4">No info available</td>
                     </tr>
+
                 </tbody>
 
             </table>
