@@ -12,19 +12,37 @@ export class BankSimulatorService {
 
     public destroyRef = inject(DestroyRef);
 
-    private baseURL = 'https://localhost:7096/api/bank-simulator'; // Update with the actual endpoint for the bank simulator
+    private baseURL = 'https://localhost:7096/api/debt'; // Update with the actual endpoint for the bank simulator
 
     private tableData = signal<BankDebtRow[]>([]);
 
 
-    constructor() {
-        
-    }
-
-  
-
     // Expose read-only signal to components
     allData = this.tableData.asReadonly();
+
+
+    
+    lookUpDebtsByCustomerName (customerName: string): Observable<BankDebtRow[]> {
+
+      // Structure of the payload
+      const payload = { clientName: customerName };
+
+      return this.httpClient.post<BankDebtRow[]>(`${this.baseURL}/filter-by-client`, payload)
+      .pipe(
+        catchError((error) => {
+          console.error('Error at http Service:', error);
+          return throwError(() => new Error('Failed to fetch debts by customer name.'));
+
+        })
+      )
+
+    }
+
+    
+    // Update the signal with the new data
+    updateTableData (newData: BankDebtRow[]) {
+      this.tableData.set(newData);
+    }
 
   
 }

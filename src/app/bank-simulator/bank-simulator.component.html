@@ -5,9 +5,13 @@
         <p class="text-center">Lookup your debt using your client ID 🔎</p>
 
         <!-- Input field for customer ID, otherwise called the paying customer -->
-        <div class="customerID">
-            <label for="customerID">Customer ID</label>
-            <input id="customerID" name="customerID" formControlName="customerID" />
+        <div class="customerName">
+            <label for="customerName">Customer Name</label>
+            <input id="customerName" name="customerName" formControlName="customerName" />
+            <div class="signIn-error-message" style="width: 300px; height: 25px">
+                @if (customerNameIsInvalid && customerNameErrors) {
+                  <p class="control-error">{{ customerNameErrors }}</p>}
+              </div>
         </div>
 
         <p class="lookupButton">

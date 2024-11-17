@@ -1,4 +1,4 @@
-import { Component, computed, inject, Input, input } from '@angular/core';
+import { Component, computed, inject, Input, input, OnInit } from '@angular/core';
 import { DataTableService } from './data-table.service';
 import { dataRow } from './data-table.model';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.css'
 })
-export class DataTableComponent {
+export class DataTableComponent implements OnInit{
   
   private tableDataService = inject(DataTableService);
 
@@ -27,6 +27,17 @@ export class DataTableComponent {
   // this signal is taken from the html tempate to update it.
   // check the ngFor loop at around line 53
   tableData = computed<dataRow[]>(() => this.tableDataService.allData());
+
+
+
+
+  ngOnInit(): void {
+    this.tableDataService.fetchTableData();
+
+  }
+
+
+
   
   // Method to toggle all checkboxes when the "select all" checkbox is clicked
   toggleSelectAll() {

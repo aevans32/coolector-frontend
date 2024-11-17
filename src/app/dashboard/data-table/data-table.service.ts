@@ -21,8 +21,8 @@ export class DataTableService {
 
   constructor() 
   {
-     this.fetchTableData();
-     console.log(this.tableData);
+    //  this.fetchTableData();
+    //  console.log(this.tableData);
   }
 
 
