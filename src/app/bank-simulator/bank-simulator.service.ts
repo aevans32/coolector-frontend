@@ -33,8 +33,13 @@ export class BankSimulatorService {
           // Transform the response data to format the "amount" and any other fields as needed
           return response.map(item => ({
             ...item,
-            amount: `$ ${Number(item.amount).toFixed(2)}`, // Format the amount as currency with 2 decimal places
-            expDate: this.formatDate(item.expDate)
+            code: item.code,
+            clientName: item.clientName,
+            status: item.status.toLocaleLowerCase(),
+            amount: `$ ${Number(item.amount).toFixed(2)}`,
+            issueDate: this.formatDate(item.expDate), // Format the amount as currency with 2 decimal places
+            expDate: this.formatDate(item.expDate),
+            selected: false
           }));
         }),
         catchError((error) => {
@@ -45,6 +50,19 @@ export class BankSimulatorService {
       )
 
     }
+
+
+    updateDebtStatus(codes: number[], newStatus: string): Observable<any> {
+      const payload = { codes, status: newStatus };
+    
+      return this.httpClient.put(`${this.baseURL}/update-status`, payload).pipe(
+        catchError(error => {
+          console.error('Error updating debt status:', error);
+          return throwError(() => new Error('Failed to update debt status.'));
+        })
+      );
+    }
+    
 
 
     // Update the signal with the new data

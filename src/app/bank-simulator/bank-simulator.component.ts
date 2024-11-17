@@ -78,6 +78,33 @@ export class BankSimulatorComponent implements OnInit{
     }
   }
 
+
+  onPaySelectedDebts () {
+
+    // Filter tableData to include only selected rows
+    const selectedCodes = this.tableData()
+      .filter(row => row.selected) // Keep only selected rows
+      .map(row => row.code); // Extract the code values of selected rows
+
+      if (selectedCodes.length === 0) {
+        console.log('No debts selected for payment.');
+        return;
+      }
+    
+      console.log('Selected Codes for Payment:', selectedCodes);
+    
+      this.bankDataService.updateDebtStatus(selectedCodes, 'paid').subscribe({
+        next: () => {
+          console.log('Debts marked as paid successfully.');
+          // Optionally refresh table data after the update
+          this.bankDataService.updateTableData([]);
+        },
+        error: (error) => {
+          console.error('Error updating debts:', error);
+        }
+      });
+  }
+
   // selectAllControl = new FormControl(false);
   // rowControls: FormArray<FormControl<boolean>> = new FormArray<FormControl<boolean>>([]);
   // toggleSelectAll() {
