@@ -12,7 +12,8 @@ export class BankSimulatorService {
 
     public destroyRef = inject(DestroyRef);
 
-    private baseURL = 'https://localhost:7096/api/debt'; // Update with the actual endpoint for the bank simulator
+    // private baseURL = 'https://localhost:7096/api/debt'; // Update with the actual endpoint for the bank simulator
+    private baseURL = 'https://coolectorapivs.azurewebsites.net/api/debt';
 
     private tableData = signal<BankDebtRow[]>([]);
 
