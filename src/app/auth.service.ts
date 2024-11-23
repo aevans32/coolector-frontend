@@ -14,7 +14,8 @@ export class AuthService {
     // not authenticated by default
     private isAuthenticated = false;
 
-    private baseURL = 'https://localhost:7096/api/user';
+    // private baseURL = 'https://localhost:7096/api/user';
+    private baseURL = 'https://coolectorapivs.azurewebsites.net/api/user';
 
     // Set Authentication status to true
     login(email: string, password: string) 

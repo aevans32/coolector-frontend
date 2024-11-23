@@ -11,7 +11,8 @@ export class DataTableService {
 
   public destroyRef = inject(DestroyRef);
 
-  private baseURL = 'https://localhost:7096/api/debt';
+  // private baseURL = 'https://localhost:7096/api/debt';
+  private baseURL = 'https://coolectorapivs.azurewebsites.net/api/debt';
 
   private tableData = signal<dataRow[]>([]);
   
